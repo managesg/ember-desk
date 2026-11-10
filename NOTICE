@@ -1,0 +1,35 @@
+Ember Council
+Copyright (c) 2026 Alejandro Delmar (managesg). See LICENSE.
+
+THIRD-PARTY NOTICES
+
+Roast Room - https://github.com/nateherkai/roast-room
+MIT License, Copyright (c) 2026 AI Automation Society
+
+Adapted here: the "advisors around a table" room layout (front-view ellipse table with
+seats along the far edge, nameplates on the table edge, speaking spotlight, word-by-word
+captions, Chair proposes the seats and the owner confirms, scored verdict sheet).
+Rewritten in public/app.js and public/styles.css and restyled with SeaBridge tokens.
+Not used: Roast Room's advisor brains, quotes, real-person advisors, portraits,
+AI Automation Society logos/brand assets, fonts, or the vendored jsPDF.
+All Ember Council advisors are role-based archetypes, not real people.
+
+Roast Room license text:
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

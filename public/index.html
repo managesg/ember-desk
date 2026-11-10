@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ember Council</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="brand-name">Ember Council</span><span class="brand-sub">Your local-business advisors, answering from your own files</span></div>
+  <ol class="stepper" id="stepper" aria-label="Council progress">
+    <li data-step="setup">Council</li><li data-step="chair">Chair</li><li data-step="talk">Table</li><li data-step="verdict">Verdict</li><li data-step="learn">Learn it</li>
+  </ol>
+  <div class="top-actions">
+    <span class="runs" id="runs" title="Active model endpoint"></span>
+    <span class="meter" id="meter" title="Cost of the last call and spend logged for this rebuild">$0.0000</span>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="stage-wrap" aria-label="The council table">
+    <div class="stage" id="stage">
+      <div class="spot" id="spot" aria-hidden="true"></div>
+      <div id="seats"></div>
+      <div class="table" id="table" aria-hidden="true"></div>
+      <div id="plates"></div>
+      <div class="center" id="center">
+        <form class="composer" id="composer">
+          <div class="label" id="bizLabel">Bluebird Coffee Roasters &middot; SAMPLE DATA</div>
+          <h2>What decision do you need help with?</h2>
+          <div class="ask-row">
+            <textarea id="prompt" rows="2" required minlength="8" placeholder="Ask your council, e.g. should we raise cold brew prices again?"></textarea>
+            <button type="button" class="mic" id="mic" title="Ask by voice" aria-label="Ask by voice"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-2.1A7 7 0 0 0 19 12h-2Z"/></svg></button>
+          </div>
+          <div class="samples" id="samples"></div>
+          <button class="convene" type="submit" id="convene">Ask the Chair who should sit</button>
+        </form>
+        <div class="proposal" id="proposal" hidden></div>
+        <div class="caption" id="caption" hidden>
+          <div class="cap-head"><span class="cap-av" id="capAv"></span><span class="cap-who" id="capWho"></span><span class="cap-tag" id="capTag"></span></div>
+          <p class="cap-text" id="capText"></p>
+          <div class="cap-sub" id="capSub"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel" aria-label="Council panel">
+    <div class="tabs" role="tablist">
+      <button role="tab" data-tab="setup" aria-selected="true">Your council</button>
+      <button role="tab" data-tab="feed" aria-selected="false">Table notes</button>
+      <button role="tab" data-tab="proof" aria-selected="false" id="proofTab">Proof</button>
+    </div>
+    <div class="tabpanel" id="tab-setup">
+      <label class="field">Industry<select id="industry"></select></label>
+      <div class="field">Advisors <small>toggle who can be seated</small></div>
+      <div id="roster" class="roster"></div>
+      <details class="custom"><summary>Add a custom advisor</summary>
+        <input id="cRole" placeholder="Role, e.g. Wine & pairing sommelier" maxlength="80">
+        <input id="cFocus" placeholder="Focus, e.g. upselling evening drinks" maxlength="120">
+        <button type="button" class="ghost" id="cAdd">Add to council</button>
+      </details>
+      <label class="field">Tone<select id="tone"></select></label>
+      <div class="files" id="files"></div>
+    </div>
+    <div class="tabpanel" id="tab-feed" hidden><div class="empty">One card per advisor as they speak, with the lines they cite from your files.</div></div>
+    <div class="tabpanel" id="tab-proof" hidden></div>
+  </aside>
+</main>
+
+<div class="sheet" id="sheet" hidden><div class="sheet-inner" id="sheetBody"></div></div>
+<div class="toast" id="toast" hidden></div>
+<p class="disclaimer">Role-based simulated advisors, not real people. Room layout adapted from Roast Room (MIT, &copy; 2026 AI Automation Society).</p>
+<script src="/app.js" type="module"></script>
+</body>
+</html>
