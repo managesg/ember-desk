@@ -163,7 +163,7 @@ function renderSeats(keys) {
     </div>`).join("");
   $("#plates").innerHTML = seats.map((s) => `
     <div class="nameplate" id="plate-${s.key}" data-seat="${s.key}">
-      <b>${esc(s.short === "Gary V" ? "Gary V" : s.name)}</b>
+      <b>${esc(s.name)}</b>
       <small>${esc(s.pillar)}</small>
       <div class="meta"><span class="pips" title="Weight on this decision"></span><span class="chip" hidden></span><span class="score" hidden></span></div>
     </div>`).join("");
@@ -448,7 +448,7 @@ function lineFor(round, p, max = 170) {
   if (round === 1) return firstSentences(clean(p.call || p.stance), max);
   if (round === 2) {
     let t = clean(p.disagreeLine || p.stance);
-    // "Graham. His argument..." reads as talking to him: "Graham, his argument..."
+    // "Chef. Your argument..." reads as talking to them: "Chef, your argument..."
     t = t.replace(/^([A-Za-z][\w.' ]{0,24})[.:,]\s+(\S+)/, (m, name, next) => !seatKey(name) ? m : `${state.byKey[seatKey(name)].short}, ${/^I('|$)/.test(next) ? next : next[0].toLowerCase() + next.slice(1)}`);
     return firstSentences(t, max);
   }
