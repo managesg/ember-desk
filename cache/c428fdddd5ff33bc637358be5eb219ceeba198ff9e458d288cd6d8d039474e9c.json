@@ -1,0 +1,29 @@
+{
+ "mode": "grade",
+ "question": "Summarize my reviews.",
+ "parsed": {
+  "score": 3,
+  "feedback": "You chose a relevant topic, but the prompt was too vague: no file specified, no questions, format, or length. AI cannot know if you want themes, counts, quotes, or actions, so output will be generic and hard to verify against your data.",
+  "next_day": {
+   "day": 2,
+   "title": "Prompt with context: file, task, format",
+   "lesson": "Your weakness was vagueness, not topic choice. A useful prompt names the exact source file, the specific question, the output format and length, and asks for evidence you can check. Without that, AI guesses. Today practice turning 'summarize my reviews' into a checkable task using only reviews.csv, with counts and quotes per theme.",
+   "prompt_to_copy": "Using only reviews.csv, summarize the 30 reviews in a table. Group by theme: cold brew price, espresso availability, speed/line, and positives. For each theme give: count of reviews, average stars, and 2 short quotes. End with top 3 actions. Keep under 250 words.",
+   "exercise": "Paste the prompt_to_copy plus reviews.csv into your AI. Check its theme counts manually against the file and note any errors. Then rewrite your original 'Summarize my reviews.' prompt using file + task + format, and compare the two outputs."
+  }
+ },
+ "raw": "{\"score\":3,\"feedback\":\"You chose a relevant topic, but the prompt was too vague: no file specified, no questions, format, or length. AI cannot know if you want themes, counts, quotes, or actions, so output will be generic and hard to verify against your data.\",\"next_day\":{\"day\":2,\"title\":\"Prompt with context: file, task, format\",\"lesson\":\"Your weakness was vagueness, not topic choice. A useful prompt names the exact source file, the specific question, the output format and length, and asks for evidence you can check. Without that, AI guesses. Today practice turning 'summarize my reviews' into a checkable task using only reviews.csv, with counts and quotes per theme.\",\"prompt_to_copy\":\"Using only reviews.csv, summarize the 30 reviews in a table. Group by theme: cold brew price, espresso availability, speed/line, and positives. For each theme give: count of reviews, average stars, and 2 short quotes. End with top 3 actions. Keep under 250 words.\",\"exercise\":\"Paste the prompt_to_copy plus reviews.csv into your AI. Check its theme counts manually against the file and note any errors. Then rewrite your original 'Summarize my reviews.' prompt using file + task + format, and compare the two outputs.\"}}",
+ "meta": {
+  "ts": "2026-11-09T22:46:16",
+  "generation_id": "gen-1794282374-zmmGDJMY5DD9AenudIzg",
+  "model": "meta/muse-ember",
+  "mode": "grade",
+  "prompt_tokens": 1739,
+  "completion_tokens": 723,
+  "cost": 0.0005354,
+  "latency_s": 2.6,
+  "cache_hit": false,
+  "cost_this_call": 0.0005354,
+  "total": 0.011033508000000001
+ }
+}

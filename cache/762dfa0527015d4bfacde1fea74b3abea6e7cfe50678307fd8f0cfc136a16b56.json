@@ -1,0 +1,89 @@
+{
+ "mode": "coo",
+ "question": "What do customers complain about?",
+ "parsed": {
+  "answer": "Customers mainly complain about cold brew price rising to $5, repeated espresso unavailability from grinder/machine failures, slow lines and service, the oat milk surcharge, lukewarm drip coffee, and hard parking. Reviews repeatedly cite cold brew at $5 as too much and multiple visits with no espresso.",
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "5-6",
+    "quote": "No espresso for three days, went elsewhere"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "12-13",
+    "quote": "Wanted espresso, grinder broken, sign said sorry"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "10-10",
+    "quote": "Line took 15 minutes"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "19-19",
+    "quote": "Slow service during rush"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "13-13",
+    "quote": "Oat milk surcharge is annoying"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "17-17",
+    "quote": "Drip coffee was lukewarm"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "28-28",
+    "quote": "Parking is hard"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "15-15",
+    "quote": "Cold brew too expensive now"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "21-21",
+    "quote": "Third visit with no espresso, giving up"
+   },
+   {
+    "file": "inbox_week.md",
+    "lines": "6-6",
+    "quote": "From: customer - Why is cold brew $5 now?"
+   },
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "Cold brew $4.00 (raised to $5.00 from week 5)"
+   }
+  ],
+  "actions": [
+   "Review cold brew $5 pricing and communicate value or adjust price",
+   "Fix grinder/espresso reliability and post outage updates",
+   "Address slow rush service and oat milk surcharge messaging"
+  ],
+  "confidence": 0.92
+ },
+ "raw": "{\"answer\": \"Customers mainly complain about cold brew price rising to $5, repeated espresso unavailability from grinder/machine failures, slow lines and service, the oat milk surcharge, lukewarm drip coffee, and hard parking. Reviews repeatedly cite cold brew at $5 as too much and multiple visits with no espresso.\", \"citations\": [{\"file\": \"reviews.csv\", \"lines\": \"3-3\", \"quote\": \"Cold brew price jumped to $5, too much\"}, {\"file\": \"reviews.csv\", \"lines\": \"5-6\", \"quote\": \"No espresso for three days, went elsewhere\"}, {\"file\": \"reviews.csv\", \"lines\": \"12-13\", \"quote\": \"Wanted espresso, grinder broken, sign said sorry\"}, {\"file\": \"reviews.csv\", \"lines\": \"10-10\", \"quote\": \"Line took 15 minutes\"}, {\"file\": \"reviews.csv\", \"lines\": \"19-19\", \"quote\": \"Slow service during rush\"}, {\"file\": \"reviews.csv\", \"lines\": \"13-13\", \"quote\": \"Oat milk surcharge is annoying\"}, {\"file\": \"reviews.csv\", \"lines\": \"17-17\", \"quote\": \"Drip coffee was lukewarm\"}, {\"file\": \"reviews.csv\", \"lines\": \"28-28\", \"quote\": \"Parking is hard\"}, {\"file\": \"reviews.csv\", \"lines\": \"15-15\", \"quote\": \"Cold brew too expensive now\"}, {\"file\": \"reviews.csv\", \"lines\": \"21-21\", \"quote\": \"Third visit with no espresso, giving up\"}, {\"file\": \"inbox_week.md\", \"lines\": \"6-6\", \"quote\": \"From: customer - Why is cold brew $5 now?\"}, {\"file\": \"price_list.md\", \"lines\": \"6-6\", \"quote\": \"Cold brew $4.00 (raised to $5.00 from week 5)\"}], \"actions\": [\"Review cold brew $5 pricing and communicate value or adjust price\", \"Fix grinder/espresso reliability and post outage updates\", \"Address slow rush service and oat milk surcharge messaging\"], \"confidence\": 0.92}",
+ "meta": {
+  "ts": "2026-11-09T22:46:05",
+  "generation_id": "gen-1794282362-6A8lqn7wYi766fDTiaeq",
+  "model": "meta/muse-ember",
+  "mode": "coo",
+  "prompt_tokens": 1738,
+  "completion_tokens": 1106,
+  "cost": 0.0007268,
+  "latency_s": 3.3,
+  "cache_hit": false,
+  "cost_this_call": 0.0007268,
+  "total": 0.008589308
+ }
+}

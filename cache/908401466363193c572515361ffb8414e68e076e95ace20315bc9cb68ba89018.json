@@ -1,0 +1,71 @@
+{
+ "mode": "course",
+ "question": "",
+ "parsed": {
+  "days": [
+   {
+    "day": 1,
+    "title": "Upload One File and Ask One Question",
+    "lesson": "Start small with faq.md. Upload it and ask AI to answer only from that file, not from general knowledge. This teaches grounding: AI should cite your oat milk, wifi, shipping, hours, and refund policies exactly as written. If it invents an answer, ask it to show the line it used. Practice this habit with every file.",
+    "prompt_to_copy": "Using only faq.md, answer: Do you have oat milk and what does it cost? Quote the exact line you used. If the file does not say, say not in file.",
+    "exercise": "Upload faq.md. Run the prompt. Check the quote matches faq.md. Then ask one more question about shipping and verify it the same way."
+   },
+   {
+    "day": 2,
+    "title": "Summarize Your Inbox Without Reading Every Email",
+    "lesson": "Use inbox_week.md to practice triage. Ask AI to group messages into urgent, money, staffing, and ignore. You should spot invoice 4471 for $812 due Friday, the grinder motor failure, Dana's shift swap, the rent increase, and the cold brew price question. Spam from marketing@spam.example should be flagged as ignore. Summaries save time but you still decide.",
+    "prompt_to_copy": "From inbox_week.md only, make a table: sender, topic, action needed, deadline if any. Put spam last as ignore. Do not add anything not in the file.",
+    "exercise": "Upload inbox_week.md and run the prompt. Cross out anything AI added that is not in the file. Write your top 3 actions for Friday."
+   },
+   {
+    "day": 3,
+    "title": "Find Patterns in Sales Data",
+    "lesson": "Now use sales.csv, your daily revenue, espresso_drinks, and cold_brew from 2026-09-07 to 2026-11-01. Ask AI to find anomalies, not just averages. It should notice espresso_drinks drop to 0 on 2026-10-20 to 2026-10-22 and revenue falling to $417-$489, and cold_brew volume dropping after early October. Always ask for dates and numbers so you can verify.",
+    "prompt_to_copy": "Analyze sales.csv only. List the 3 biggest anomalies with exact dates and values for revenue, espresso_drinks, and cold_brew. Show your calculations. Do not guess causes.",
+    "exercise": "Upload sales.csv and run the prompt. Verify the zero-espresso dates in the file yourself. Write one sentence: what happened, when, and how much revenue was affected."
+   },
+   {
+    "day": 4,
+    "title": "Turn Reviews Into Themes",
+    "lesson": "Use reviews.csv to learn what customers repeat. Ask AI to count themes and quote examples: cold brew price complaints at $5, espresso unavailable due to grinder issues, slow lines, and praise for beans, croissants, and staff. Counting prevents one loud review from misleading you. Ask for star breakdown too, so you see both praise and pain in proportion.",
+    "prompt_to_copy": "Analyze reviews.csv only. Count reviews by stars, then group text into themes with counts and one short quote per theme. Do not invent reviews.",
+    "exercise": "Upload reviews.csv and run the prompt. Check the star counts by hand for 1-star and 5-star. Circle the top complaint theme and the top praise theme."
+   },
+   {
+    "day": 5,
+    "title": "Cross-Check Files Against Each Other",
+    "lesson": "This is where AI gets powerful: compare price_list.md, sales.csv, reviews.csv, and inbox_week.md together. price_list.md shows cold brew raised to $5.00 from week 5, which matches price complaints in reviews.csv and the customer question in inbox_week.md. Cross-checking stops you blaming marketing when the real cause is price or the grinder outage. Always ask AI to name which file supports each claim.",
+    "prompt_to_copy": "Compare price_list.md, sales.csv, reviews.csv, and inbox_week.md. For cold brew price and espresso availability, state what each file says with dates or quotes, and where they agree or disagree.",
+    "exercise": "Upload all four files and run the prompt. Highlight one agreement between files and one gap, for example a complaint with no sales drop. Decide what you would investigate next."
+   },
+   {
+    "day": 6,
+    "title": "Draft Replies and Updates From Your Files",
+    "lesson": "Use AI to draft, not to decide. Draft a reply to the cold brew customer using price_list.md and faq.md refund policy, and a sign or post about espresso being back using inbox_week.md repair timing. Then update faq.md with clearer wording. You must edit tone and facts before sending. AI drafts fast; you own accuracy and customer relationships.",
+    "prompt_to_copy": "Using only price_list.md and faq.md, draft a polite reply to a customer asking why cold brew is $5 now. Mention the price change and the remake policy. Keep it under 80 words. Do not add new policies.",
+    "exercise": "Upload price_list.md and faq.md, run the prompt, then edit the draft in your own voice. Save it as a template you can reuse."
+   },
+   {
+    "day": 7,
+    "title": "Build Your Weekly AI Routine",
+    "lesson": "Combine all five files into a 15-minute weekly routine: Monday summarize inbox_week.md, Wednesday check sales.csv for anomalies, Friday review reviews.csv themes, and monthly cross-check price_list.md and faq.md. Save your best prompts from Days 1 to 6 in one note. The goal is not more AI, it is faster decisions on your own Bluebird Coffee Roasters data, verified by you.",
+    "prompt_to_copy": "Using sales.csv, reviews.csv, and inbox_week.md only, give me a one-page weekly briefing: sales anomalies, top review themes, and inbox actions. Cite dates and counts for every claim.",
+    "exercise": "Run the Day 7 prompt with sales.csv, reviews.csv, and inbox_week.md. Save the briefing and your 3 best prompts. Schedule the same 15 minutes next week."
+   }
+  ]
+ },
+ "raw": "{\"days\":[{\"day\":1,\"title\":\"Upload One File and Ask One Question\",\"lesson\":\"Start small with faq.md. Upload it and ask AI to answer only from that file, not from general knowledge. This teaches grounding: AI should cite your oat milk, wifi, shipping, hours, and refund policies exactly as written. If it invents an answer, ask it to show the line it used. Practice this habit with every file.\",\"prompt_to_copy\":\"Using only faq.md, answer: Do you have oat milk and what does it cost? Quote the exact line you used. If the file does not say, say not in file.\",\"exercise\":\"Upload faq.md. Run the prompt. Check the quote matches faq.md. Then ask one more question about shipping and verify it the same way.\"},{\"day\":2,\"title\":\"Summarize Your Inbox Without Reading Every Email\",\"lesson\":\"Use inbox_week.md to practice triage. Ask AI to group messages into urgent, money, staffing, and ignore. You should spot invoice 4471 for $812 due Friday, the grinder motor failure, Dana's shift swap, the rent increase, and the cold brew price question. Spam from marketing@spam.example should be flagged as ignore. Summaries save time but you still decide.\",\"prompt_to_copy\":\"From inbox_week.md only, make a table: sender, topic, action needed, deadline if any. Put spam last as ignore. Do not add anything not in the file.\",\"exercise\":\"Upload inbox_week.md and run the prompt. Cross out anything AI added that is not in the file. Write your top 3 actions for Friday.\"},{\"day\":3,\"title\":\"Find Patterns in Sales Data\",\"lesson\":\"Now use sales.csv, your daily revenue, espresso_drinks, and cold_brew from 2026-09-07 to 2026-11-01. Ask AI to find anomalies, not just averages. It should notice espresso_drinks drop to 0 on 2026-10-20 to 2026-10-22 and revenue falling to $417-$489, and cold_brew volume dropping after early October. Always ask for dates and numbers so you can verify.\",\"prompt_to_copy\":\"Analyze sales.csv only. List the 3 biggest anomalies with exact dates and values for revenue, espresso_drinks, and cold_brew. Show your calculations. Do not guess causes.\",\"exercise\":\"Upload sales.csv and run the prompt. Verify the zero-espresso dates in the file yourself. Write one sentence: what happened, when, and how much revenue was affected.\"},{\"day\":4,\"title\":\"Turn Reviews Into Themes\",\"lesson\":\"Use reviews.csv to learn what customers repeat. Ask AI to count themes and quote examples: cold brew price complaints at $5, espresso unavailable due to grinder issues, slow lines, and praise for beans, croissants, and staff. Counting prevents one loud review from misleading you. Ask for star breakdown too, so you see both praise and pain in proportion.\",\"prompt_to_copy\":\"Analyze reviews.csv only. Count reviews by stars, then group text into themes with counts and one short quote per theme. Do not invent reviews.\",\"exercise\":\"Upload reviews.csv and run the prompt. Check the star counts by hand for 1-star and 5-star. Circle the top complaint theme and the top praise theme.\"},{\"day\":5,\"title\":\"Cross-Check Files Against Each Other\",\"lesson\":\"This is where AI gets powerful: compare price_list.md, sales.csv, reviews.csv, and inbox_week.md together. price_list.md shows cold brew raised to $5.00 from week 5, which matches price complaints in reviews.csv and the customer question in inbox_week.md. Cross-checking stops you blaming marketing when the real cause is price or the grinder outage. Always ask AI to name which file supports each claim.\",\"prompt_to_copy\":\"Compare price_list.md, sales.csv, reviews.csv, and inbox_week.md. For cold brew price and espresso availability, state what each file says with dates or quotes, and where they agree or disagree.\",\"exercise\":\"Upload all four files and run the prompt. Highlight one agreement between files and one gap, for example a complaint with no sales drop. Decide what you would investigate next.\"},{\"day\":6,\"title\":\"Draft Replies and Updates From Your Files\",\"lesson\":\"Use AI to draft, not to decide. Draft a reply to the cold brew customer using price_list.md and faq.md refund policy, and a sign or post about espresso being back using inbox_week.md repair timing. Then update faq.md with clearer wording. You must edit tone and facts before sending. AI drafts fast; you own accuracy and customer relationships.\",\"prompt_to_copy\":\"Using only price_list.md and faq.md, draft a polite reply to a customer asking why cold brew is $5 now. Mention the price change and the remake policy. Keep it under 80 words. Do not add new policies.\",\"exercise\":\"Upload price_list.md and faq.md, run the prompt, then edit the draft in your own voice. Save it as a template you can reuse.\"},{\"day\":7,\"title\":\"Build Your Weekly AI Routine\",\"lesson\":\"Combine all five files into a 15-minute weekly routine: Monday summarize inbox_week.md, Wednesday check sales.csv for anomalies, Friday review reviews.csv themes, and monthly cross-check price_list.md and faq.md. Save your best prompts from Days 1 to 6 in one note. The goal is not more AI, it is faster decisions on your own Bluebird Coffee Roasters data, verified by you.\",\"prompt_to_copy\":\"Using sales.csv, reviews.csv, and inbox_week.md only, give me a one-page weekly briefing: sales anomalies, top review themes, and inbox actions. Cite dates and counts for every claim.\",\"exercise\":\"Run the Day 7 prompt with sales.csv, reviews.csv, and inbox_week.md. Save the briefing and your 3 best prompts. Schedule the same 15 minutes next week.\"}]}",
+ "meta": {
+  "ts": "2026-11-09T22:46:14",
+  "generation_id": "gen-1794282369-tvUqCkZJXaxPCKgjQsnY",
+  "model": "meta/muse-ember",
+  "mode": "course",
+  "prompt_tokens": 1719,
+  "completion_tokens": 1520,
+  "cost": 0.0009319,
+  "latency_s": 4.9,
+  "cache_hit": false,
+  "cost_this_call": 0.0009319,
+  "total": 0.010498108
+ }
+}

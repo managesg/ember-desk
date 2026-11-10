@@ -1,0 +1,61 @@
+{
+ "data": {
+  "label": "(redacted)",
+  "is_management_key": false,
+  "is_provisioning_key": false,
+  "limit": 250,
+  "limit_reset": null,
+  "limit_remaining": 249.887421508,
+  "include_byok_in_limit": false,
+  "budgets": [
+   {
+    "scope": "key_limit",
+    "guardrail_id": null,
+    "budget_id": null,
+    "limit_usd": 250,
+    "spend_usd": 0.112578492,
+    "remaining_usd": 249.887421508,
+    "reset_interval": null,
+    "resets_at": null,
+    "include_byok": false
+   }
+  ],
+  "effective_budget": {
+   "scope": "key_limit",
+   "guardrail_id": null,
+   "budget_id": null,
+   "limit_usd": 250,
+   "spend_usd": 0.112578492,
+   "remaining_usd": 249.887421508,
+   "reset_interval": null,
+   "resets_at": null,
+   "include_byok": false
+  },
+  "usage": 0.112578492,
+  "usage_daily": 0.112578492,
+  "usage_weekly": 0.112578492,
+  "usage_monthly": 0.112578492,
+  "byok_usage": 0,
+  "byok_usage_daily": 0,
+  "byok_usage_weekly": 0,
+  "byok_usage_monthly": 0,
+  "is_free_tier": true,
+  "expires_at": null,
+  "creator_user_id": "user_3Lte5qKJNVrEBq7QtT0Fg0Gw5cB",
+  "organization_id": null,
+  "workspace_id": "790d75fa-b887-566f-badb-c8ea1abc1e7e",
+  "allowed_data_regions": [
+   "global"
+  ],
+  "free_model_daily_requests": {
+   "used": 0,
+   "limit": 50,
+   "remaining": 50
+  },
+  "rate_limit": {
+   "requests": -1,
+   "interval": "10s",
+   "note": "This field is deprecated and safe to ignore."
+  }
+ }
+}
