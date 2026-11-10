@@ -7,9 +7,19 @@ from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 ROOT = os.path.dirname(os.path.abspath(__file__)); PUB = os.path.join(ROOT, "public"); HIST = os.path.join(ROOT, "data", "history")
-BASE = os.environ.get("LLM_BASE_URL", "https://openrouter.ai/api/v1").rstrip("/")
-MODEL = os.environ.get("LLM_MODEL", "meta/muse-ember")
-OPENROUTER = "openrouter.ai" in BASE  # only OpenRouter gets usage.include / reasoning fields and a cost meter
+_ENV_BASE = os.environ.get("LLM_BASE_URL", "").rstrip("/")
+PROVIDERS = {  # three engines; the owner switches in Your council -> Engine
+ "openrouter": {"label": "Muse Ember via OpenRouter", "base": "https://openrouter.ai/api/v1", "model": "meta/muse-ember"},
+ "meta": {"label": "Muse Ember via Meta API", "base": "https://api.meta.ai/v1", "model": "muse-ember-1.0"},
+ "local": {"label": "Local Meta Llama", "base": _ENV_BASE if _ENV_BASE and "openrouter.ai" not in _ENV_BASE else "http://localhost:11434/v1", "model": "llama3.2"},
+}
+PROV = os.environ.get("LLM_PROVIDER") or ("local" if _ENV_BASE and "openrouter.ai" not in _ENV_BASE else "openrouter")
+if os.environ.get("LLM_MODEL"): PROVIDERS[PROV]["model"] = os.environ["LLM_MODEL"]
+def use(pid):
+    global PROV, BASE, MODEL, OPENROUTER
+    PROV = pid; BASE, MODEL = PROVIDERS[pid]["base"].rstrip("/"), PROVIDERS[pid]["model"]
+    OPENROUTER = "openrouter.ai" in BASE  # only OpenRouter gets usage.include / reasoning fields and a cost meter
+use(PROV)
 CAP = float(os.environ.get("BUDGET_CAP", "0.20")); HARD = 0.95  # rebuild cap; whole project (old + new log) must stay under $0.95
 CACHE_ONLY = os.environ.get("CACHE_ONLY") == "1"
 LOG = os.path.join(ROOT, "proof", "council_log.jsonl"); OLD_LOG = os.path.join(ROOT, "proof", "openrouter_log.jsonl")
@@ -36,9 +46,15 @@ SYS = {
  "learn": 'Turn this council decision into a 10-minute lesson that teaches the owner to use AI on their own files for this kind of decision.'
           ' Return {"title":str,"why":str (<=35 words),"steps":[4 str, each <=25 words, timed, e.g. "2 min: ..."],"prompt_to_copy":str (a reusable prompt with [BRACKETED] blanks the owner fills, <=90 words),"try_next":str (<=25 words)}.' + RULES,
 }
-MAXTOK = {"chair": 3000, "open": 3000, "cruxes": 3000, "rebut": 3000, "draft": 2500, "vote": 2500, "verdict": 5000, "learn": 4000}  # reasoning tokens count against max_tokens
+MAXTOK = {"test": 800, "chair": 3000, "open": 3000, "cruxes": 3000, "rebut": 3000, "draft": 2500, "vote": 2500, "verdict": 5000, "learn": 4000}  # reasoning tokens count against max_tokens
 
 def key():
+    if PROV == "meta":  # env first, else this PC's muse CLI auth file; never printed or logged
+        k = os.environ.get("META_API_KEY")
+        if not k:
+            try: k = json.load(open(os.path.expanduser("~/.config/muse/auth.json")))["providers"]["meta"]["api_key"]
+            except Exception: k = ""
+        return k
     if not OPENROUTER: return os.environ.get("LLM_API_KEY") or "local"
     k = os.environ.get("OPENROUTER_API_KEY")  # a machine-wide LLM_API_KEY often belongs to another provider, so it is the last resort here
     if not k:
@@ -72,12 +88,18 @@ def call(messages, mode):
     for attempt in (0, 1, 2):
         try: r = api("/chat/completions", body); break
         except urllib.error.HTTPError as e:
-            if e.code not in (429, 502, 503) or attempt == 2: raise
+            if e.code not in (429, 502, 503) or attempt == 2:
+                try: why = json.loads(e.read()).get("error", {}).get("message", "")[:220]
+                except Exception: why = ""
+                if PROV == "local" and e.code == 404: why = why or "model not installed: run `ollama pull %s`" % MODEL
+                raise RuntimeError("%s answered HTTP %s. %s" % (config()["label"], e.code, why))
             time.sleep(3)
+        except urllib.error.URLError as e:
+            raise RuntimeError("%s is not reachable at %s (%s). For a local model start it first, e.g. `ollama run llama3.2`." % (config()["label"], BASE, e.reason))
     u = r.get("usage") or {}
     rec = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "generation_id": r.get("id"), "model": r.get("model") or MODEL, "mode": mode,
-           "prompt_tokens": u.get("prompt_tokens"), "completion_tokens": u.get("completion_tokens"), "cost": u.get("cost") if OPENROUTER else 0,
-           "latency_s": round(time.time() - t0, 1), "cache_hit": False, "provider": "openrouter" if OPENROUTER else "local"}
+           "prompt_tokens": u.get("prompt_tokens"), "completion_tokens": u.get("completion_tokens"), "cost": u.get("cost") if OPENROUTER else (u.get("cost") if PROV == "meta" else 0),
+           "latency_s": round(time.time() - t0, 1), "cache_hit": False, "provider": PROV}
     with LOCK:
         os.makedirs(os.path.dirname(LOG), exist_ok=True); open(LOG, "a").write(json.dumps(rec) + "\n")
     return r["choices"][0]["message"].get("content"), rec
@@ -150,7 +172,7 @@ SESS = {}
 def hist_path(sid): return os.path.join(HIST, re.sub(r"[^\w-]", "", sid) + ".json")
 def save(s):
     os.makedirs(HIST, exist_ok=True)
-    json.dump({k: s[k] for k in ("id", "title", "mode", "status", "question", "created", "cost", "events", "votes")}, open(hist_path(s["id"]), "w", encoding="utf8"), indent=1)
+    json.dump({k: s.get(k) for k in ("id", "title", "mode", "status", "question", "industry", "engine", "model", "created", "ended", "cost", "events", "votes")}, open(hist_path(s["id"]), "w", encoding="utf8"), indent=1)
 def emit(s, ev):
     ev.setdefault("at", int(time.time() * 1000)); s["events"].append(ev)
     if ev["type"] in ("setup", "round_done", "verdict", "end", "error"): save(s)
@@ -221,14 +243,48 @@ def run_council(s, prop, seats, tone, industry):
         v["disclaimer"] = "Role-based AI advisors (%s), answering from SAMPLE business files. Not real people; check the numbers before you act." % config()["label"]
         line = lambda k: last[k].get("oneLine") or last[k].get("disagreeLine") or ""
         emit(s, {"type": "verdict", "verdict": v, "seats": [{"key": k, "weight": weights[k]["weight"], "optionScores": last[k].get("optionScores"), "oneLine": line(k)} for k in seats]})
-        s["status"] = "done"
+        s["status"] = "done"; s["verdict_label"] = v.get("label")
     except Exception as e:
         s["status"] = "error"; emit(s, {"type": "error", "error": str(e)[:200]})
-    emit(s, {"type": "end"}); pool.shutdown(wait=False)
+    s["ended"] = time.strftime("%Y-%m-%dT%H:%M:%S"); emit(s, {"type": "end"}); pool.shutdown(wait=False)
+    log_event({"type": "session", "id": s["id"], "title": s["title"], "question": s["question"], "industry": s.get("industry"), "seats": seats, "status": s["status"],
+               "verdict": s.get("verdict_label"), "engine": s.get("engine"), "model": s.get("model"), "cost": round(s["cost"], 6), "created": s["created"], "ended": s["ended"]})
 
 def config():
-    return {"model": MODEL, "base": BASE if not OPENROUTER else "openrouter.ai", "openrouter": OPENROUTER, "cache_only": CACHE_ONLY, "cap": CAP,
-            "label": ("Muse Ember via OpenRouter" if MODEL == "meta/muse-ember" else MODEL + " via OpenRouter") if OPENROUTER else "local model: " + MODEL}
+    lab = PROVIDERS[PROV]["label"] + ("" if MODEL in ("meta/muse-ember", "muse-ember-1.0") else " (%s)" % MODEL)
+    return {"model": MODEL, "base": BASE, "provider": PROV, "openrouter": OPENROUTER, "local": PROV == "local", "cache_only": CACHE_ONLY, "cap": CAP, "label": lab,
+            "providers": [{"id": k, "label": v["label"], "model": v["model"], "base": v["base"]} for k, v in PROVIDERS.items()]}
+def test_provider(pid):
+    if pid not in PROVIDERS: raise ValueError("unknown provider")
+    old = PROV; use(pid)
+    try:
+        raw, rec = call([{"role": "user", "content": "Reply with exactly: Ember Council is online."}], "test")
+        return {"provider": pid, "label": config()["label"], "answer": (raw or "").strip()[:200], "generation_id": rec["generation_id"], "model": rec["model"], "cost": rec["cost"], "latency_s": rec["latency_s"]}
+    finally: use(old)
+
+# ---------- meeting transcripts from any recorder (VTT, SRT, Otter/Fireflies/Recorder text) ----------
+def clean_transcript(t):
+    out = []
+    for l in str(t).replace("\r", "").split("\n"):
+        l = re.sub(r"<[^>]+>", "", re.sub(r"<v(?:\.[\w.]+)?\s+([^>]+)>", r"\1: ", l)).strip()  # keep VTT speaker names
+        if not l or l.upper().startswith("WEBVTT") or l.isdigit() or re.match(r"^(NOTE|STYLE|REGION)\b", l): continue
+        if re.match(r"^\d{1,2}:\d{2}(:\d{2})?([.,]\d+)?\s*-->", l): continue  # cue timing line
+        l = re.sub(r"^\[?\(?\d{1,2}:\d{2}(:\d{2})?([.,]\d+)?\]?\)?\s*[-:]?\s*", "", l)  # leading timestamp
+        if l and (not out or out[-1] != l): out.append(l)
+    return "\n".join(out)
+LOGS = os.path.join(ROOT, "logs", "council_log.jsonl")
+def log_event(rec):
+    os.makedirs(os.path.dirname(LOGS), exist_ok=True)
+    with LOCK: open(LOGS, "a", encoding="utf8").write(json.dumps(rec) + "\n")
+def meeting_files(): return [os.path.basename(p) for p in data_files() if os.path.basename(p).startswith("meeting_")]
+def save_transcript(title, text):
+    slug = re.sub(r"[^a-z0-9]+", "-", str(title).lower()).strip("-")[:30] or "meeting"
+    name = "meeting_%s_%s.txt" % (time.strftime("%Y-%m-%d"), slug)
+    body = clean_transcript(text)[:20000]  # shortcut: long meetings are cut at 20k chars (~5k tokens) to keep every call cheap; upgrade = summarise first
+    if len(body.splitlines()) < 1: raise ValueError("The transcript is empty after cleaning.")
+    open(os.path.join(ROOT, "data", name), "w", encoding="utf8").write(body + "\n")
+    log_event({"type": "transcript", "ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "file": name, "title": clip(title, 120), "lines": len(body.splitlines())})
+    return {"file": name, "lines": len(body.splitlines()), "text": body}
 def proof():
     rd = lambda n: json.load(open(os.path.join(ROOT, "proof", n))) if os.path.exists(os.path.join(ROOT, "proof", n)) else None
     log = [json.loads(l) for l in open(LOG)] if os.path.exists(LOG) else []
@@ -264,7 +320,7 @@ class H(SimpleHTTPRequestHandler):
     def send(self, code, body):
         b = json.dumps(body).encode(); self.send_response(code); self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
-    def body(self): return json.loads(self.rfile.read(min(int(self.headers.get("Content-Length", 0)), 64000)) or b"{}")
+    def body(self): return json.loads(self.rfile.read(min(int(self.headers.get("Content-Length", 0)), 600000)) or b"{}")
     def do_GET(self):
         u = urlparse(self.path); path, qs = u.path, parse_qs(u.query)
         if path == "/api/proof": return self.send(200, proof())
@@ -277,6 +333,7 @@ class H(SimpleHTTPRequestHandler):
             board, extras, default = seats_for((qs.get("industry") or ["restaurant"])[0])
             return self.send(200, {"seats": board + extras, "board": {"default": default}, "runner": "api", "hasKey": bool(key()), "industries": {k: v["label"] for k, v in presets()["industries"].items()}, "tones": presets()["tones"]})
         if path == "/api/sessions": return self.send(200, sessions())
+        if path == "/api/meetings": return self.send(200, {"files": [{"file": f, "text": open(os.path.join(ROOT, "data", f), encoding="utf8").read()} for f in meeting_files()]})
         if path.startswith("/api/sessions/"):
             s = load(path.rsplit("/", 1)[1]); return self.send(200, {"events": s["events"], "votes": s.get("votes", {})} if s else {"events": []})
         if path.startswith("/api/stream/"): return self.stream(path.rsplit("/", 1)[1])
@@ -298,6 +355,22 @@ class H(SimpleHTTPRequestHandler):
         try:
             d = self.body()
             if self.path == "/api/ask": return self.send(200, ask(d.get("mode"), d.get("payload") or {}))
+            running = any(x["status"] == "running" for x in SESS.values())
+            if self.path == "/api/provider":
+                if running: return self.send(409, {"error": "Wait for the running council to finish."})
+                if d.get("id") not in PROVIDERS: return self.send(400, {"error": "unknown provider"})
+                use(d["id"]); return self.send(200, config())
+            if self.path == "/api/provider/test":
+                if running: return self.send(409, {"error": "Wait for the running council to finish."})
+                return self.send(200, test_provider(d.get("id")))
+            if self.path == "/api/transcript/clean": return self.send(200, {"text": clean_transcript(clip(d.get("text"), 400000))})
+            if self.path == "/api/transcript":  # any recorder or automation (Zapier, Make) can push {title, text} here
+                if running: return self.send(409, {"error": "Wait for the running council to finish."})
+                if d.get("delete"):
+                    f = os.path.basename(str(d.get("file")))
+                    if f in meeting_files(): os.remove(os.path.join(ROOT, "data", f)); log_event({"type": "transcript_removed", "ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "file": f})
+                    return self.send(200, {"files": meeting_files()})
+                return self.send(200, save_transcript(clip(d.get("title"), 120), clip(d.get("text"), 400000)))
             if self.path == "/api/propose":
                 cands = [clean_seat(a) for a in (d.get("seats") or [])[:12]]
                 p, m = must("chair", {"question": clip(d.get("prompt"), 600), "industry": clip(d.get("industry"), 60), "advisors": [{"id": a["key"], "role": a["role"], "owns": a["owns"]} for a in cands]})
@@ -314,7 +387,8 @@ class H(SimpleHTTPRequestHandler):
                         "weights": {x.get("id"): {"weight": x.get("weight") if x.get("weight") in (1, 2, 3) else 1, "reason": clip(x.get("why"), 120)} for x in (pr.get("seated") or []) if isinstance(x, dict)}}
                 sid = time.strftime("%Y%m%d-%H%M%S-") + uuid.uuid4().hex[:4]
                 s = SESS[sid] = {"id": sid, "title": prop["title"], "mode": "quick" if d.get("mode") == "quick" else "full", "status": "running", "question": clip(d.get("prompt"), 600),
-                                 "created": time.strftime("%Y-%m-%dT%H:%M:%S"), "cost": 0.0, "events": [], "seats": cands, "votes": {}}
+                                 "created": time.strftime("%Y-%m-%dT%H:%M:%S"), "cost": 0.0, "events": [], "seats": cands, "votes": {},
+                                 "industry": clip(d.get("industry"), 60), "engine": config()["label"], "model": MODEL}
                 threading.Thread(target=run_council, args=(s, prop, seats, clip(d.get("tone"), 120), clip(d.get("industry"), 60)), daemon=True).start()
                 return self.send(200, {"id": sid})
             if self.path.startswith("/api/vote/"):  # viewers vote on a verdict: {name, vote}
@@ -342,6 +416,8 @@ def selftest():
     try: call([], "open"); assert 0
     except RuntimeError: pass
     for f in glob.glob(os.path.join(ROOT, "cache", "*.json")): assert json.load(open(f, encoding="utf8"))["mode"] in SYS
+    vtt = "WEBVTT\n\n1\n00:00:01.000 --> 00:00:04.000\n<v Ana>We should raise cold brew.\n\n2\n00:00:05,000 --> 00:00:07,000\nBen: Customers already complain.\n[00:12] Ana: OK, test it."
+    assert clean_transcript(vtt) == "Ana: We should raise cold brew.\nBen: Customers already complain.\nAna: OK, test it.", clean_transcript(vtt)
     print("selftest ok")
 if __name__ == "__main__":
     if "--selftest" in sys.argv: selftest()

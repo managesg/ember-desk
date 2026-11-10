@@ -65,7 +65,7 @@
           <form class="composer" id="composer" hidden>
             <h2 data-type>What decision do you need help with?</h2>
             <div class="ask-row"><textarea id="prompt" rows="2" placeholder="Ask your council, e.g. Should we raise cold brew prices again?" required minlength="10"></textarea><button type="button" class="mic" id="mic" title="Ask by voice" aria-label="Ask by voice"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V21h2v-2.1A7 7 0 0 0 19 12h-2Z"/></svg></button><button type="submit" class="mic send" id="send" title="Send to the Chair" aria-label="Send to the Chair"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 20.5 21 12 3 3.5v6.6L15 12 3 13.9z"/></svg></button></div>
-            <div class="biz" id="biz"></div>
+            <div class="biz" id="biz"><span id="bizFiles">Business files</span> · <button type="button" class="linkbtn" id="importBtn">+ Import a meeting transcript</button></div>
             <div class="samples" id="samples"></div>
             <div class="composer-row">
               <div class="mode" role="radiogroup" aria-label="Council size">
@@ -148,11 +148,21 @@
     <div class="cfg-row">
       <label>Industry <select id="industry"></select></label>
       <label>Tone <select id="tone"></select></label>
-      <label>Engine <select id="provider"></select></label>
+      <label>Engine <select id="provider"></select></label><button class="ghost" type="button" id="testEngine">Test engine</button>
     </div>
     <div id="rosterEdit" class="roster-edit"></div>
     <div class="cfg-row"><button class="ghost" type="button" id="addSeat">+ Add a custom advisor</button><button class="ghost" type="button" id="resetSeats">Reset to preset</button></div>
     <form method="dialog"><button class="ghost">Done</button></form>
+  </dialog>
+
+  <dialog id="meetingDialog" class="card-dialog wide">
+    <h3>Import a meeting</h3>
+    <p class="muted">Paste or upload a transcript from any recorder (Zoom or Teams .vtt, .srt, Otter, Fireflies, Google Meet or Recorder text). Timestamps are stripped; correct anything below, then add it to your business files so the advisors can cite it. Recorders and automations can also POST <code>{title, text}</code> to <code>/api/transcript</code>.</p>
+    <div class="cfg-row"><label>Title <input id="mTitle" maxlength="80" value="Team meeting"></label><label>File <input id="mFile" type="file" accept=".txt,.vtt,.srt,.md,.csv,text/plain"></label></div>
+    <textarea id="mText" class="mtext" rows="12" placeholder="Paste the transcript here"></textarea>
+    <div class="cfg-row"><button class="convene" type="button" id="mSave">Add to my business files</button><span class="muted" id="mInfo"></span></div>
+    <div id="mList" class="mlist"></div>
+    <form method="dialog"><button class="ghost">Close</button></form>
   </dialog>
 
   <dialog id="proofDialog" class="card-dialog wide">

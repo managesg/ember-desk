@@ -926,7 +926,53 @@ function bindCouncil(r) {
     const k = b.closest("[data-key]").dataset.key;
     state.seats = state.seats.filter((s) => s.key !== k); state.on.delete(k); afterEdit(); renderRosterEdit();
   });
-  bindMic();
+  bindMic(); bindMeetings(); bindEngine();
+}
+async function bindEngine() {
+  const c = await fetch("/api/config").then((x) => x.json());
+  $("#provider").innerHTML = c.providers.map((p) => `<option value="${p.id}" ${p.id === c.provider ? "selected" : ""}>${esc(p.label)} (${esc(p.model)})</option>`).join("");
+  $("#provider").addEventListener("change", async (e) => {
+    const r = await fetch("/api/provider", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: e.target.value }) });
+    const j = await r.json();
+    if (!r.ok) { toast(j.error); e.target.value = c.provider; return; }
+    c.provider = j.provider; toast("Engine: " + j.label + (j.local ? ". Local calls cost $0." : "")); refreshUsage(); fillGuide();
+  });
+  $("#testEngine").addEventListener("click", async () => {
+    const b = $("#testEngine"); b.disabled = true; b.textContent = "Testing...";
+    const r = await fetch("/api/provider/test", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id: $("#provider").value }) });
+    const j = await r.json(); b.disabled = false; b.textContent = "Test engine";
+    toast(r.ok ? `${j.label} answered: "${j.answer}" (${j.model}, ${j.latency_s}s${j.cost != null ? ", $" + Number(j.cost).toFixed(5) : ""})` : j.error); refreshUsage();
+  });
+}
+function bindMeetings() {
+  const list = async () => {
+    const j = await fetch("/api/meetings").then((x) => x.json());
+    $("#mList").innerHTML = j.files.length ? `<div class="label">In your business files</div>` + j.files.map((f) => `<div class="mrow"><b>${esc(f.file)}</b><span>${f.text.split("\n").filter(Boolean).length} lines</span><button class="ghost" type="button" data-rm="${esc(f.file)}">Remove</button></div>`).join("") : "";
+    fillBiz();
+  };
+  $("#importBtn").addEventListener("click", () => { list(); $("#meetingDialog").showModal(); });
+  $("#mFile").addEventListener("change", async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    if (f.size > 400000) return toast("That file is over 400 KB. Paste the part you need.");
+    const raw = await f.text();
+    const j = await fetch("/api/transcript/clean", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ text: raw }) }).then((x) => x.json());
+    $("#mText").value = j.text; $("#mTitle").value = f.name.replace(/\.[^.]+$/, "");
+    $("#mInfo").textContent = `${j.text.split("\n").length} lines after removing timestamps. Edit anything that is wrong.`;
+  });
+  $("#mSave").addEventListener("click", async () => {
+    const text = $("#mText").value.trim(); if (text.length < 20) return toast("Paste a transcript first.");
+    const r = await fetch("/api/transcript", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ title: $("#mTitle").value, text }) });
+    const j = await r.json(); if (!r.ok) return toast(j.error);
+    $("#mText").value = j.text; $("#mInfo").textContent = `Saved as ${j.file} (${j.lines} lines). The advisors will cite it, e.g. "${j.file} L3-5".`; list();
+  });
+  $("#mList").addEventListener("click", async (e) => {
+    const b = e.target.closest("[data-rm]"); if (!b) return;
+    await fetch("/api/transcript", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ delete: true, file: b.dataset.rm }) }); list();
+  });
+  fillBiz();
+}
+function fillBiz() {
+  fetch("/api/files").then((x) => x.json()).then((f) => { $("#bizFiles").textContent = `${f.files.length} business files (SAMPLE DATA, ${f.lines} lines)`; $("#bizFiles").title = f.files.join(", "); }).catch(() => {});
 }
 function afterEdit() {
   state.byKey = Object.fromEntries(state.seats.map((s) => [s.key, s]));

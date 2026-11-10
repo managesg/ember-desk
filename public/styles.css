@@ -573,3 +573,15 @@ button { font: inherit; cursor: pointer; }
 
 .mic.send{background:#fff;color:#0b1a33;margin-left:8px}
 .mic.send:hover{filter:brightness(.92)}
+.linkbtn { background: none; border: 0; padding: 0; color: var(--accent); font-size: 12.5px; text-decoration: underline; text-underline-offset: 3px; }
+.mtext { width: 100%; background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline-strong); border-radius: 10px; padding: 10px 12px; font: 13px/1.5 "IBM Plex Mono", monospace; resize: vertical; }
+.cfg-row input:not([type=checkbox]):not([type=color]) { background: var(--surface-2); color: var(--ink); border: 1px solid var(--hairline-strong); border-radius: 8px; padding: 6px 8px; font: 13px var(--font-text); }
+.mlist { display: grid; gap: 6px; margin: 10px 0; }
+.mrow { display: flex; gap: 12px; align-items: center; font-size: 13px; } .mrow b { color: var(--ink); font-family: "IBM Plex Mono", monospace; font-weight: 500; } .mrow span { color: var(--ink-mute); }
+.card-dialog code { font: 12px "IBM Plex Mono", monospace; color: var(--accent); }
+@media (min-width: 821px) {
+  .top-actions { gap: 6px; }
+  .top-actions .ghost { padding: 6px 11px; font-size: 12.5px; }
+  .stepper li { padding: 6px 8px; font-size: 12px; }
+  .usage { max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
+}

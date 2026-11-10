@@ -29,6 +29,16 @@ Default: OpenRouter + `meta/muse-ember`. Any OpenAI-compatible endpoint works th
 
 LM Studio and llama.cpp servers work the same way.
 
+Or switch engines in the app: **Your council -> Engine** has *Muse Ember via OpenRouter* (default), *Muse Ember via Meta API* (`https://api.meta.ai/v1`, model `muse-ember-1.0`, key from `META_API_KEY`) and *Local Meta Llama* (Ollama on `http://localhost:11434/v1`, model `llama3.2`; first run `ollama pull llama3.2`). **Test engine** sends one short call and shows who answered. Tested tonight: OpenRouter answered in 1.8 s for $0.00016; Meta direct returned HTTP 403 because the only Meta key on this PC is a Muse Code subscription key, which Meta limits to the Muse Code client (a pay-as-you-go key is needed); the local server was running but without `llama3.2`, and the app says so instead of failing silently. Local calls show `$0 local` in the meter.
+
+## Import a meeting (any recorder)
+
+**+ Import a meeting transcript** (under the question box) takes a pasted transcript or a `.txt`, `.vtt`, `.srt` or `.md` file from Zoom, Teams, Otter, Fireflies, Google Meet or Recorder. Timestamps and cue numbers are stripped, speaker names are kept, and the owner can correct the text before adding it. It is saved as `data/meeting_<date>_<title>.txt`, so advisors cite it like any other file (`meeting_2026-11-09_team.txt L3-5`). Recorders and automations (Zapier, Make) can push the same thing with `POST /api/transcript {"title": "...", "text": "..."}`. Google Drive and Meet API connectors (OAuth) are next.
+
+## History and logs
+
+Every council is saved to `data/history/<session_id>.json`: question, industry, seated advisors, every turn with its checked citations, votes, verdict, engine and model, cost and timestamps. **Past sessions** replays them. One summary line per session, and every transcript import, goes to `logs/council_log.jsonl`.
+
 ## Run (Python stdlib only, no installs)
 
     set OPENROUTER_API_KEY=...        # only needed for questions that are not cached yet

@@ -1,0 +1,3 @@
+{"type": "session", "id": "20261109-232804-3642", "title": "Should we raise cold brew prices again?", "question": "Should we raise cold brew prices again?", "industry": "Restaurant / cafe", "seats": ["chef", "marketer", "psych", "ops", "finance"], "status": "done", "verdict": "DON'T", "engine": "Muse Ember via OpenRouter", "model": "meta/muse-ember", "cost": 0.0, "created": "2026-11-09T23:28:04", "ended": "2026-11-09T23:28:04"}
+{"type": "transcript", "ts": "2026-11-09T23:30:12", "file": "meeting_2026-11-09_meet.txt", "title": "meet", "lines": 2}
+{"type": "transcript_removed", "ts": "2026-11-09T23:30:13", "file": "meeting_2026-11-09_meet.txt"}
