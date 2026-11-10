@@ -570,3 +570,6 @@ button { font: inherit; cursor: pointer; }
 #guideDialog .x { position: absolute; top: 14px; right: 14px; }
 #guideDialog .convene { margin-top: 6px; }
 #guideDialog a { color: var(--accent); }
+
+.mic.send{background:#fff;color:#0b1a33;margin-left:8px}
+.mic.send:hover{filter:brightness(.92)}

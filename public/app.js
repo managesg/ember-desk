@@ -1055,3 +1055,6 @@ async function openProof() {
 }
 
 boot();
+
+// Enter sends (Shift+Enter = new line)
+document.getElementById("prompt").addEventListener("keydown", (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); e.target.form && e.target.form.requestSubmit(); } });
