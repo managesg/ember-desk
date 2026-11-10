@@ -1,19 +1,28 @@
 <!doctype html><meta charset=utf-8><title>Ember Desk</title>
-<style>body{padding-bottom:80px;font:15px system-ui;max-width:900px;margin:0 auto;padding:12px;background:#fffaf3;color:#222}
-h1{margin:0}.tag{color:#b4501a}button{background:#d9622b;color:#fff;border:0;padding:8px 14px;margin:3px;border-radius:6px;cursor:pointer;font-size:15px}
-button.t{background:#eee;color:#222}button.t.on{background:#222;color:#fff}pre,.box{background:#fff;border:1px solid #ddd;padding:10px;border-radius:6px;white-space:pre-wrap}
-#meter{position:fixed;top:8px;right:12px;background:#222;color:#7CFC9A;padding:6px 12px;border-radius:6px;font-family:monospace}
-.cite{color:#0a5;font-family:monospace;font-size:13px}.warn{background:#fde8c8;padding:4px 8px;border-radius:4px;font-size:13px}
-td,th{border-bottom:1px solid #ddd;padding:3px 8px;font:12px monospace;text-align:left}#cap{pointer-events:none;position:fixed;bottom:0;left:0;right:0;background:#000c;color:#fff;padding:10px;text-align:center;font-size:18px;display:none}</style>
-<div id=meter>meter $0.0000</div>
-<h1>Ember Desk <span class=tag>Get your AI advantage: learn AI by doing your real work.</span></h1>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>:root{--navy:#0F2757;--navy-900:#081739;--deep-blue:#1E3A8A;--aqua:#71CACD;--aqua-200:#DBF2F3;--mist:#F0F5FC;--paper:#F7F9FD;--white:#fff;--ink:#0A1833;--fg-2:#354972;--fg-3:#6C7FA0;--border-1:#DCE3EE;--border-2:#BAC5D8;--unsworn:#C28A2B;
+--font-display:"Fraunces",Georgia,serif;--font-sans:"IBM Plex Sans",system-ui,"Segoe UI",sans-serif;--font-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;--radius:10px;--radius-sm:6px;--shadow-1:0 1px 2px rgba(10,24,51,.06),0 1px 1px rgba(10,24,51,.04)}
+body{margin:0;padding-bottom:80px;font:16px/1.5 var(--font-sans);background:var(--paper);color:var(--ink)}
+#hdr{background:var(--navy-900);color:#fff;padding:16px 24px;display:flex;justify-content:space-between;align-items:center}
+h1{margin:0;font:700 1.5rem var(--font-display)}.tag{display:block;font:400 .875rem var(--font-sans);color:var(--aqua)}
+#wrap{max-width:960px;margin:0 auto;padding:16px 24px}
+button{background:var(--navy);color:#fff;border:0;padding:8px 16px;margin:4px 4px 4px 0;border-radius:var(--radius-sm);cursor:pointer;font:500 1rem var(--font-sans)}
+button.t{background:var(--mist);color:var(--navy)}button.t.on{background:var(--navy);color:#fff}
+input,textarea{font:1rem var(--font-sans);padding:8px;border:1px solid var(--border-2);border-radius:var(--radius-sm)}
+pre,.box{background:var(--white);border:1px solid var(--border-1);box-shadow:var(--shadow-1);padding:16px;border-radius:var(--radius);white-space:pre-wrap;margin:8px 0}
+.box b{color:var(--navy)}#files{border-top:3px solid var(--aqua)}
+#meter{font:700 1.25rem var(--font-display);color:var(--aqua);text-align:right}
+.cite{color:var(--fg-2);font:.875rem var(--font-mono);margin:4px 0}.warn{background:#FBF1DC;color:#6b4a0c;border-left:4px solid var(--unsworn);padding:8px 16px;font-size:.875rem}
+td,th{border-bottom:1px solid var(--border-1);padding:4px 8px;font:.875rem var(--font-mono);text-align:left}
+#cap{pointer-events:none;position:fixed;bottom:0;left:0;right:0;background:var(--navy-900);color:#fff;padding:16px;text-align:center;font:500 1.25rem var(--font-sans);display:none}</style>
+<div id=hdr><h1>Ember Desk<span class=tag>Get your AI advantage: learn AI by doing your real work.</span></h1><div id=meter>meter $0.0000</div></div><div id=wrap>
 <div class=warn>SAMPLE DATA: Bluebird Coffee Roasters (fictional). Model: meta/muse-ember via OpenRouter.</div>
 <p><button class="t on" id=tA onclick="tab('A')">Ask the COO</button><button class=t id=tC onclick="tab('C')">Course</button><button class=t id=tP onclick="tab('P')">Proof</button></p>
 <div id=A><div id=files class=box></div><p>
 <button onclick="q('Why did sales drop?')">Why did sales drop?</button><button onclick="q('What do customers complain about?')">What do customers complain about?</button><button onclick="q('What should I do this week?')">What should I do this week?</button>
 <input id=qi placeholder="ask anything" size=30><button onclick="q(qi.value)">Ask</button></p><div id=out></div></div>
 <div id=C hidden><button id=bc onclick="course()">Build my 7-day course</button><div id=cout></div></div>
-<div id=P hidden><div id=pout></div></div><div id=cap></div>
+<div id=P hidden><div id=pout></div></div></div><div id=cap></div>
 <script>
 let day1=null,total=0;const $=id=>document.getElementById(id),esc=s=>String(s).replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function cap(t){$('cap').style.display='block';$('cap').textContent=t}
@@ -36,5 +45,5 @@ async function proof(){cap('OpenRouter proof: generation ids, per-call cost, key
  const avg=p.log.length?p.total/p.log.length:0;
  $('pout').innerHTML=`<div class=box>Total logged spend: <b>$${p.total.toFixed(4)}</b> over ${p.log.length} calls.<br>/api/v1/key limit_remaining before: ${b}<br>after: ${a}<br>delta: $${b&&a?(b-a).toFixed(6):'n/a'} (live run only; log for that run: see proof/)<br>
  Month estimate: 30 days x (3 answers + lesson + grade) x avg $${avg.toFixed(5)} = <b>$${(30*5*avg).toFixed(2)}</b></div><table><tr><th>generation_id<th>mode<th>in<th>out<th>cost<th>s</tr>`+p.log.map(l=>`<tr><td>${l.generation_id}<td>${l.mode}<td>${l.prompt_tokens}<td>${l.completion_tokens}<td>${l.cost}<td>${l.latency_s}</tr>`).join('')+'</table>'}
-fetch('/api/files').then(r=>r.json()).then(d=>{const n=d.pack.split('=== FILE').length-1;$('files').innerHTML=`<b>${n} files loaded (SAMPLE DATA)</b> ~${Math.round(d.pack.length/4)} tokens: price_list.md, faq.md, reviews.csv, sales.csv, inbox_week.md`;cap('Meet Bluebird Coffee (SAMPLE DATA). Five files loaded.')});
+fetch('/api/files').then(r=>r.json()).then(d=>{const n=d.pack.split('=== FILE').length-1;$('files').innerHTML=`<b>${n} files loaded (SAMPLE DATA)</b> 1,719 prompt tokens (measured): price_list.md, faq.md, reviews.csv, sales.csv, inbox_week.md`;cap('Meet Bluebird Coffee (SAMPLE DATA). Five files loaded.')});
 </script>
