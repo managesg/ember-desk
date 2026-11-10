@@ -54,7 +54,7 @@ The key stays server-side and is never logged. A budget guard refuses calls once
 | Model | `meta/muse-ember` via OpenRouter |
 | Per-call log | `proof/council_log.jsonl`: generation id, model, provider, tokens, cost, latency |
 | Council build + test spend | $0.0131 logged over 22 live calls: 2 Chair proposals (one from v0), 5 openings, fault lines, 5 rebuttals, draft, 5 votes, verdict, Learn it, 1 engine test; ~$0.0006 per call, ~1.9-2.4k prompt tokens each |
-| One full council (live) | $0.0108 for 18 calls (Chair proposal through verdict), from `data/history/20261109-231802-1bf8.json`; Learn it adds ~$0.0008; a cached replay costs $0 |
+| One full council (live) | $0.0108 for 18 calls (openings through verdict) plus ~$0.0006 for the Chair's proposal, from `data/history/20261109-231802-1bf8.json`; Learn it adds ~$0.0008; a cached replay costs $0 |
 | Key usage over the live run | `proof/council_key_before.json` -> `council_key_after.json`: +$0.0147. The key is shared with other projects tonight, so this is an upper bound on account-wide use; the per-generation log is this app's real spend |
 | Total for this account tonight (both projects, all tests) | about $0.13 of the $1 |
 | Earlier Ember Desk log | `proof/openrouter_log.jsonl`, key snapshots `proof/key_before.json` / `key_after.json` |
