@@ -1,0 +1,65 @@
+{
+ "mode": "open",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "seat": {
+   "role": "Food-cost & operations manager",
+   "short": "Ops manager",
+   "focus": "unit costs, equipment, staffing",
+   "owns": "Can we deliver it every day at a healthy margin?",
+   "persona": "You run the numbers on cost per cup or plate, waste, equipment uptime and shift plans. You spot the operational root cause behind a sales dip."
+  }
+ },
+ "parsed": {
+  "stance": "strong no",
+  "call": "I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift.",
+  "optionScores": {
+   "A": 5,
+   "B": 1,
+   "C": 8
+  },
+  "citations": [
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   },
+   {
+    "file": "sales.csv",
+    "lines": "30-30",
+    "quote": "2026-10-05,716,89,18"
+   }
+  ]
+ },
+ "raw": "{\"stance\":\"strong no\",\"call\":\"I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift.\",\"optionScores\":{\"A\":5,\"B\":1,\"C\":8},\"citations\":[{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"},{\"file\":\"sales.csv\",\"lines\":\"30-30\",\"quote\":\"2026-10-05,716,89,18\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:05",
+  "generation_id": "gen-1794284283-mkYk7IrL6bNd8gkFwiqt",
+  "model": "meta/muse-ember",
+  "mode": "open",
+  "prompt_tokens": 1908,
+  "completion_tokens": 883,
+  "cost": 0.0006323,
+  "latency_s": 2.6,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0006323,
+  "total": 0.0029833
+ }
+}

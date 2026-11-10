@@ -551,3 +551,22 @@ button { font: inherit; cursor: pointer; }
   .actions, .v-foot button, .prompt-box button { display: none !important; }
   .v-more { display: none; }
 }
+/* fit the whole room in 1280x720 */
+@media (min-width: 821px) {
+  .topbar { padding: 10px 24px; gap: 18px; }
+  .usage { white-space: nowrap; }
+  .topic { margin: 12px 24px 0; padding: 10px 18px; gap: 20px; }
+  .topic h1 { font-size: 22px; margin: 4px 0 0; }
+  .options { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 620px; flex-basis: 620px; min-width: 0; gap: 4px 14px; }
+  .opt { grid-template-columns: 24px 1fr 30px; font-size: 12px; }
+  .layout { padding: 12px 24px 8px; }
+  .stage { aspect-ratio: auto; height: calc(100vh - 92px); min-height: 470px; max-height: none; }
+  body:has(#topic:not([hidden])) .stage { height: calc(100vh - 186px); }
+  .panel { top: 70px; max-height: calc(100vh - 92px); }
+  body:has(#topic:not([hidden])) .panel { max-height: calc(100vh - 186px); }
+}
+.ghost.icon { width: 34px; height: 34px; padding: 0; display: inline-grid; place-items: center; font-weight: 700; font-size: 16px; }
+#guideDialog { position: fixed; }
+#guideDialog .x { position: absolute; top: 14px; right: 14px; }
+#guideDialog .convene { margin-top: 6px; }
+#guideDialog a { color: var(--accent); }

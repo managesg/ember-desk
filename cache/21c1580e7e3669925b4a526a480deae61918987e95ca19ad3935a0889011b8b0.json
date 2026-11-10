@@ -1,0 +1,95 @@
+{
+ "mode": "rebut",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "openings": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   }
+  ],
+  "cruxes": "[{\"question\": \"Should cold brew stay at $5 or drop to $4?\", \"sides\": [{\"position\": \"Keep at $5 price_list.md:6| reviews.csv:3|\", \"seats\": [\"chef\", \"psych\", \"ops\"]}, {\"position\": \"Lower to $4 price_list.md:6| sales.csv:30|\", \"seats\": [\"marketer\", \"finance\"]}]}]",
+  "seat": {
+   "role": "Local marketing expert",
+   "short": "Marketer",
+   "focus": "footfall & word of mouth",
+   "owns": "Will the neighbourhood notice, and what do they hear?",
+   "persona": "You grow neighbourhood businesses with signage, reviews, local social posts and regulars who bring friends. You think in cheap, testable moves."
+  }
+ },
+ "parsed": {
+  "disagreeWith": "chef",
+  "disagreeLine": "Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back.",
+  "moved": "no",
+  "stance": "strong no",
+  "optionScores": {
+   "A": 4,
+   "B": 1,
+   "C": 9
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   },
+   {
+    "file": "sales.csv",
+    "lines": "30-30",
+    "quote": "2026-10-05,716,89,18"
+   }
+  ]
+ },
+ "raw": "{\"disagreeWith\":\"chef\",\"disagreeLine\":\"Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back.\",\"moved\":\"no\",\"stance\":\"strong no\",\"optionScores\":{\"A\":4,\"B\":1,\"C\":9},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"},{\"file\":\"sales.csv\",\"lines\":\"30-30\",\"quote\":\"2026-10-05,716,89,18\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:13",
+  "generation_id": "gen-1794284289-yAfbIuarx3lqVGBPMq76",
+  "model": "meta/muse-ember",
+  "mode": "rebut",
+  "prompt_tokens": 2263,
+  "completion_tokens": 771,
+  "cost": 0.0006118,
+  "latency_s": 4.7,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0006118,
+  "total": 0.0078872
+ }
+}

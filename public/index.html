@@ -27,7 +27,7 @@
     </ol>
     <div class="top-actions">
       <span class="usage" id="usage" title="Tokens used by this app since it started"></span>
-      <button class="ghost" id="guideBtn" type="button" hidden>How it works</button>
+      <button class="ghost icon" id="guideBtn" type="button" title="How Ember Council works" aria-label="How Ember Council works">?</button>
       <button class="ghost" id="councilBtn" type="button">Your council</button>
       <button class="ghost" id="proofBtn" type="button">Proof</button>
       <button class="ghost" id="historyBtn" type="button">Past sessions</button>
@@ -130,8 +130,9 @@
   </dialog>
 
   <dialog id="guideDialog" class="card-dialog">
+    <form method="dialog" class="x"><button class="ghost icon" aria-label="Close">&times;</button></form>
     <div id="guideBody"></div>
-    <form method="dialog"><button class="ghost">Close</button></form>
+    <form method="dialog"><button class="convene" id="gotIt">Got it</button></form>
   </dialog>
 
   <dialog id="historyDialog" class="card-dialog">
@@ -160,7 +161,7 @@
   </dialog>
 
   <div class="toast" id="toast" hidden></div>
-  <p class="disclaimer">Role-based AI advisors, not real people. Sample business: Bluebird Coffee Roasters (SAMPLE DATA). Table layout adapted from <a href="https://github.com/nateherkai/roast-room">Roast Room</a> (MIT, &copy; 2026 AI Automation Society).</p>
+  
 
   <script src="/app.js" type="module"></script>
 </body>

@@ -32,6 +32,7 @@ const GUIDE = `
         <li><span><b>Engine:</b> <span id="guideEngine">Muse Ember via OpenRouter</span>. Each advisor turn is one short call; the cost shows top right.</span></li>
         <li><span><b>Every council is saved.</b> Open Past sessions to replay one.</span></li>
         <li><span><b>Proof:</b> every call's generation id, tokens and cost.</span></li>
+        <li><span>Role-based AI advisors, not real people. Table layout adapted from <a href="https://github.com/nateherkai/roast-room" target="_blank" rel="noopener">Roast Room</a> (MIT, &copy; 2026 AI Automation Society).</span></li>
       </ul>
     </div>
   </div>`;
@@ -93,6 +94,7 @@ async function boot() {
   reset();
   typeIn($("#composer h2"));
   typeIn($("#waiting h2"));
+  if (!loadLocal("ember-council-seen-guide")) { openGuide(); saveLocal("ember-council-seen-guide", 1); }
   const ss = await fetch("/api/sessions").then((x) => x.json());
   if (ss.running) attach(ss.running);
   else if (ss.live) attach(ss.live);
@@ -311,8 +313,8 @@ function reset() {
   $("#playbar").hidden = true;
   $("#newBtn").hidden = true;
   $("#verdictSheet").hidden = true;
-  $("#panelHead").textContent = "Getting started";
-  $("#feed").innerHTML = GUIDE; fillGuide();
+  $("#panelHead").textContent = "Key points";
+  $("#feed").innerHTML = '<div class="empty">One line per advisor as the council talks. Click a seat to read its full card and the lines it cites from your files.</div>';
   $$(".vote").forEach((b) => b.remove());
   renderSeats(state.board);
   $$(".seat").forEach((el) => { el.classList.remove("absent", "speaking", "thinking", "addressed"); $(".bust", el).dataset.shape = "base"; });
@@ -853,7 +855,7 @@ function tickWait() {
 }
 
 function openGuide() {
-  $("#guideBody").innerHTML = GUIDE;
+  $("#guideBody").innerHTML = GUIDE; fillGuide();
   const d = $("#guideDialog");
   if (!d.open) d.showModal();
 }
@@ -871,7 +873,8 @@ function toast(msg) {
 async function refreshUsage() {
   const u = await fetch("/api/usage").then((x) => x.json()).catch(() => null);
   if (!u) return;
-  $("#usage").textContent = `${u.label} · ${u.openrouter ? "$" + u.cost.toFixed(4) + " spent" : "$0 local"} · ${u.calls} calls`;
+  $("#usage").textContent = `${u.label.replace(" via OpenRouter", "")} · ${u.openrouter ? "$" + u.cost.toFixed(4) : "$0 local"}`;
+  $("#usage").title = `${u.label}: ${u.calls} model calls logged, ${u.openrouter ? "$" + u.cost.toFixed(4) + " spent this rebuild" : "local model, no cost"}`;
 }
 // ------------------------------------------------------------- Ember Council additions
 // per-browser council edits; storage can be blocked, so every access is guarded

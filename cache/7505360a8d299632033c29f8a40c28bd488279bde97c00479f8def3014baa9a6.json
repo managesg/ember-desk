@@ -1,0 +1,65 @@
+{
+ "mode": "open",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "seat": {
+   "role": "Customer psychologist",
+   "short": "Psychologist",
+   "focus": "how guests feel about prices & changes",
+   "owns": "How will regulars feel, and will they come back?",
+   "persona": "You study how people perceive price, fairness and habit. You read reviews for emotion, anchoring and the moment a regular decides to switch."
+  }
+ },
+ "parsed": {
+  "stance": "strong no",
+  "call": "I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good.",
+  "optionScores": {
+   "A": 5,
+   "B": 1,
+   "C": 8
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "15-15",
+    "quote": "Cold brew too expensive now"
+   }
+  ]
+ },
+ "raw": "{\"stance\":\"strong no\",\"call\":\"I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good.\",\"optionScores\":{\"A\":5,\"B\":1,\"C\":8},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"},{\"file\":\"reviews.csv\",\"lines\":\"15-15\",\"quote\":\"Cold brew too expensive now\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:05",
+  "generation_id": "gen-1794284283-DCMn7AU04OFLF0Lc9VsJ",
+  "model": "meta/muse-ember",
+  "mode": "open",
+  "prompt_tokens": 1904,
+  "completion_tokens": 615,
+  "cost": 0.0004979,
+  "latency_s": 2.6,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0004979,
+  "total": 0.002351
+ }
+}

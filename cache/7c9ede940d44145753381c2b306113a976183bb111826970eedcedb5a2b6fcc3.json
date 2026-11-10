@@ -1,0 +1,187 @@
+{
+ "mode": "verdict",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "record": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   },
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "to finance: Finance, dropping to $4 won't fix a lukewarm, inconsistent cup. Hold $5, fix quality first, then the price earns trust."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "to chef: Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "to marketer: Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "to finance: Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "to ops: Ops, keeping $5 protects price but cash is down: volume fell from 37 to 18, so $5 x 18 is less than $4 x 37."
+   },
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "votes amend: Test $4 only after we fix the cup; price cut alone won't earn trust."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "votes endorse: Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "votes amend: Regulars already call $5 too much; a timed $4 test shows fairness and gives them a reason to return."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "votes endorse: Timed $4 test is right, but only if we track cost per cup, waste and staffing before calling it profit."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "votes endorse: Endorse timed $4 test. $5 cut daily cold brew cash, another rise risks more. Track cost per cup before permanent cut."
+   }
+  ],
+  "scores": "{\"A\": 4.0, \"B\": 0.8, \"C\": 8.0}"
+ },
+ "parsed": {
+  "label": "DON'T",
+  "recommended": "C",
+  "call": "Do not raise cold brew again. Lower to $4 as a one-week test; $5 already cut volume from about 35 to about 20 daily and triggered repeated too-much complaints.",
+  "confidence": 7,
+  "why": [
+   {
+    "seat": "finance",
+    "point": "At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily."
+   },
+   {
+    "seat": "marketer",
+    "point": "Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth."
+   },
+   {
+    "seat": "ops",
+    "point": "Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   }
+  ],
+  "minority": {
+   "seat": "chef",
+   "quote": "Hold $5, fix quality first, then the price earns trust.",
+   "would_have_to_be_true": "Quality fix alone restores $5 volume without lowering price."
+  },
+  "next_steps": [
+   {
+    "when": "Today",
+    "action": "Stop any further cold brew price increase; confirm $4 test start."
+   },
+   {
+    "when": "This week",
+    "action": "Run $4 for one week, track daily cold brew volume and revenue."
+   },
+   {
+    "when": "In 30 days",
+    "action": "Review test volume, complaints, and cost per cup before deciding."
+   }
+  ],
+  "kill_criteria": "If $4 week does not lift volume above ~25 daily, revert and reassess.",
+  "fights": [
+   {
+    "crux": "Price versus quality as cause of lost sales",
+    "story": "Chef says fix cup first; others say $5 complaints and volume drop show price is the barrier."
+   }
+  ],
+  "conditions": [
+   "Track cost per cup, waste and staffing before claiming profit",
+   "Monitor reviews for cold brew price complaints during test"
+  ],
+  "cheapest_test": "One week at $4, compare daily cold brew units to $5 baseline.",
+  "revisit": "After one-week $4 test",
+  "citations": [
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "2,\"Cold brew price jumped to $5, too much\""
+   },
+   {
+    "file": "sales.csv",
+    "lines": "2-2",
+    "quote": "2026-09-07,758,80,32"
+   },
+   {
+    "file": "sales.csv",
+    "lines": "30-30",
+    "quote": "2026-10-05,716,89,18"
+   }
+  ]
+ },
+ "raw": "{\"label\":\"DON'T\",\"recommended\":\"C\",\"call\":\"Do not raise cold brew again. Lower to $4 as a one-week test; $5 already cut volume from about 35 to about 20 daily and triggered repeated too-much complaints.\",\"confidence\":7,\"why\":[{\"seat\":\"finance\",\"point\":\"At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily.\"},{\"seat\":\"marketer\",\"point\":\"Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth.\"},{\"seat\":\"ops\",\"point\":\"Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift.\"}],\"minority\":{\"seat\":\"chef\",\"quote\":\"Hold $5, fix quality first, then the price earns trust.\",\"would_have_to_be_true\":\"Quality fix alone restores $5 volume without lowering price.\"},\"next_steps\":[{\"when\":\"Today\",\"action\":\"Stop any further cold brew price increase; confirm $4 test start.\"},{\"when\":\"This week\",\"action\":\"Run $4 for one week, track daily cold brew volume and revenue.\"},{\"when\":\"In 30 days\",\"action\":\"Review test volume, complaints, and cost per cup before deciding.\"}],\"kill_criteria\":\"If $4 week does not lift volume above ~25 daily, revert and reassess.\",\"fights\":[{\"crux\":\"Price versus quality as cause of lost sales\",\"story\":\"Chef says fix cup first; others say $5 complaints and volume drop show price is the barrier.\"}],\"conditions\":[\"Track cost per cup, waste and staffing before claiming profit\",\"Monitor reviews for cold brew price complaints during test\"],\"cheapest_test\":\"One week at $4, compare daily cold brew units to $5 baseline.\",\"revisit\":\"After one-week $4 test\",\"citations\":[{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"},{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"2,\\\"Cold brew price jumped to $5, too much\\\"\"},{\"file\":\"sales.csv\",\"lines\":\"2-2\",\"quote\":\"2026-09-07,758,80,32\"},{\"file\":\"sales.csv\",\"lines\":\"30-30\",\"quote\":\"2026-10-05,716,89,18\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:24",
+  "generation_id": "gen-1794284302-UthZ0xYwfvzTY0z1wuoj",
+  "model": "meta/muse-ember",
+  "mode": "verdict",
+  "prompt_tokens": 2366,
+  "completion_tokens": 1316,
+  "cost": 0.0008946,
+  "latency_s": 3.2,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0008946,
+  "total": 0.01216
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "mode": "rebut",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "openings": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   }
+  ],
+  "cruxes": "[{\"question\": \"Should cold brew stay at $5 or drop to $4?\", \"sides\": [{\"position\": \"Keep at $5 price_list.md:6| reviews.csv:3|\", \"seats\": [\"chef\", \"psych\", \"ops\"]}, {\"position\": \"Lower to $4 price_list.md:6| sales.csv:30|\", \"seats\": [\"marketer\", \"finance\"]}]}]",
+  "seat": {
+   "role": "Food-cost & operations manager",
+   "short": "Ops manager",
+   "focus": "unit costs, equipment, staffing",
+   "owns": "Can we deliver it every day at a healthy margin?",
+   "persona": "You run the numbers on cost per cup or plate, waste, equipment uptime and shift plans. You spot the operational root cause behind a sales dip."
+  }
+ },
+ "parsed": {
+  "disagreeWith": "finance",
+  "disagreeLine": "Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit.",
+  "moved": "no",
+  "stance": "strong no",
+  "optionScores": {
+   "A": 8,
+   "B": 1,
+   "C": 4
+  },
+  "citations": [
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   },
+   {
+    "file": "sales.csv",
+    "lines": "30-30",
+    "quote": "2026-10-05,716,89,18"
+   }
+  ]
+ },
+ "raw": "{\"disagreeWith\":\"finance\",\"disagreeLine\":\"Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit.\",\"moved\":\"no\",\"stance\":\"strong no\",\"optionScores\":{\"A\":8,\"B\":1,\"C\":4},\"citations\":[{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"},{\"file\":\"sales.csv\",\"lines\":\"30-30\",\"quote\":\"2026-10-05,716,89,18\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:11",
+  "generation_id": "gen-1794284289-pGE7ttgB5M3v4kaIXuz9",
+  "model": "meta/muse-ember",
+  "mode": "rebut",
+  "prompt_tokens": 2268,
+  "completion_tokens": 767,
+  "cost": 0.0006103,
+  "latency_s": 2.8,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0006103,
+  "total": 0.0072754000000000004
+ }
+}

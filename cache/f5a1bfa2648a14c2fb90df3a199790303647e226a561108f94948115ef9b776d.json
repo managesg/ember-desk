@@ -1,0 +1,95 @@
+{
+ "mode": "rebut",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "openings": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   }
+  ],
+  "cruxes": "[{\"question\": \"Should cold brew stay at $5 or drop to $4?\", \"sides\": [{\"position\": \"Keep at $5 price_list.md:6| reviews.csv:3|\", \"seats\": [\"chef\", \"psych\", \"ops\"]}, {\"position\": \"Lower to $4 price_list.md:6| sales.csv:30|\", \"seats\": [\"marketer\", \"finance\"]}]}]",
+  "seat": {
+   "role": "Customer psychologist",
+   "short": "Psychologist",
+   "focus": "how guests feel about prices & changes",
+   "owns": "How will regulars feel, and will they come back?",
+   "persona": "You study how people perceive price, fairness and habit. You read reviews for emotion, anchoring and the moment a regular decides to switch."
+  }
+ },
+ "parsed": {
+  "disagreeWith": "marketer",
+  "disagreeLine": "Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone.",
+  "moved": "no",
+  "stance": "strong no",
+  "optionScores": {
+   "A": 7,
+   "B": 1,
+   "C": 4
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   },
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   }
+  ]
+ },
+ "raw": "{\"disagreeWith\":\"marketer\",\"disagreeLine\":\"Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone.\",\"moved\":\"no\",\"stance\":\"strong no\",\"optionScores\":{\"A\":7,\"B\":1,\"C\":4},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"},{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:11",
+  "generation_id": "gen-1794284289-ZLcIntpa5ufX1FQXGVix",
+  "model": "meta/muse-ember",
+  "mode": "rebut",
+  "prompt_tokens": 2264,
+  "completion_tokens": 663,
+  "cost": 0.0005579,
+  "latency_s": 2.7,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0005579,
+  "total": 0.0060574
+ }
+}

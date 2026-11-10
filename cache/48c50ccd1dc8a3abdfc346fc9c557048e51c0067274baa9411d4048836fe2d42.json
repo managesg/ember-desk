@@ -1,0 +1,65 @@
+{
+ "mode": "open",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "seat": {
+   "role": "Local marketing expert",
+   "short": "Marketer",
+   "focus": "footfall & word of mouth",
+   "owns": "Will the neighbourhood notice, and what do they hear?",
+   "persona": "You grow neighbourhood businesses with signage, reviews, local social posts and regulars who bring friends. You think in cheap, testable moves."
+  }
+ },
+ "parsed": {
+  "stance": "strong no",
+  "call": "I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4.",
+  "optionScores": {
+   "A": 5,
+   "B": 1,
+   "C": 9
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   },
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   }
+  ]
+ },
+ "raw": "{\"stance\":\"strong no\",\"call\":\"I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4.\",\"optionScores\":{\"A\":5,\"B\":1,\"C\":9},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"},{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:06",
+  "generation_id": "gen-1794284283-WLuxAp0IndcZN0VrC79O",
+  "model": "meta/muse-ember",
+  "mode": "open",
+  "prompt_tokens": 1903,
+  "completion_tokens": 783,
+  "cost": 0.0005818,
+  "latency_s": 3.2,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0005818,
+  "total": 0.0041878
+ }
+}

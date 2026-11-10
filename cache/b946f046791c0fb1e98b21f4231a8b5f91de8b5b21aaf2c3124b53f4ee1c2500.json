@@ -1,0 +1,87 @@
+{
+ "mode": "cruxes",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "openings": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   }
+  ]
+ },
+ "parsed": {
+  "unanimous": false,
+  "cruxes": [
+   {
+    "question": "Should cold brew stay at $5 or drop to $4?",
+    "sides": [
+     {
+      "position": "Keep at $5 price_list.md:6| reviews.csv:3|",
+      "seats": [
+       "chef",
+       "psych",
+       "ops"
+      ]
+     },
+     {
+      "position": "Lower to $4 price_list.md:6| sales.csv:30|",
+      "seats": [
+       "marketer",
+       "finance"
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "raw": "{\"unanimous\":false,\"cruxes\":[{\"question\":\"Should cold brew stay at $5 or drop to $4?\",\"sides\":[{\"position\":\"Keep at $5 price_list.md:6| reviews.csv:3|\",\"seats\":[\"chef\",\"psych\",\"ops\"]},{\"position\":\"Lower to $4 price_list.md:6| sales.csv:30|\",\"seats\":[\"marketer\",\"finance\"]}]}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:08",
+  "generation_id": "gen-1794284286-6Nk92DedX3am0EuywaKP",
+  "model": "meta/muse-ember",
+  "mode": "cruxes",
+  "prompt_tokens": 2024,
+  "completion_tokens": 1003,
+  "cost": 0.0007039,
+  "latency_s": 2.5,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0007039,
+  "total": 0.0048917000000000006
+ }
+}

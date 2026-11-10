@@ -1,0 +1,1124 @@
+{
+ "id": "20261109-232248-aa32",
+ "title": "Should we raise cold brew prices again?",
+ "mode": "full",
+ "status": "done",
+ "question": "Should we raise cold brew prices again?",
+ "created": "2026-11-09T23:22:48",
+ "cost": 0.0,
+ "events": [
+  {
+   "type": "phase",
+   "phase": "setup",
+   "label": "The Chair is setting the table",
+   "at": 1794284568220
+  },
+  {
+   "type": "setup",
+   "seats": [
+    "chef",
+    "marketer",
+    "psych",
+    "ops",
+    "finance"
+   ],
+   "options": [
+    {
+     "id": "A",
+     "label": "Keep price at $5"
+    },
+    {
+     "id": "B",
+     "label": "Raise above $5"
+    },
+    {
+     "id": "C",
+     "label": "Lower back to $4"
+    }
+   ],
+   "weights": {
+    "chef": {
+     "weight": 2,
+     "reason": "Judges if cold brew quality justifies higher board price [price_list.md:6]"
+    },
+    "marketer": {
+     "weight": 2,
+     "reason": "Neighbourhood already noticed $5 jump in reviews [reviews.csv:3]"
+    },
+    "psych": {
+     "weight": 3,
+     "reason": "Regulars complain $5 not worth it [reviews.csv:30]"
+    },
+    "ops": {
+     "weight": 2,
+     "reason": "Volume fell after increase, affecting daily delivery margin [sales.csv:30]"
+    },
+    "finance": {
+     "weight": 3,
+     "reason": "Cash impact depends on volume drop after $5 [sales.csv:30]"
+    }
+   },
+   "title": "Should we raise cold brew prices again?",
+   "mode": "full",
+   "defs": [
+    {
+     "key": "chef",
+     "short": "Chef",
+     "role": "Michelin-level chef",
+     "focus": "menu & quality",
+     "owns": "Is what we serve worth the price on the board?",
+     "name": "Chef",
+     "pillar": "Michelin-level chef",
+     "question": "Is what we serve worth the price on the board?",
+     "portrait": "chef",
+     "color": "#e8a33d",
+     "custom": false
+    },
+    {
+     "key": "marketer",
+     "short": "Marketer",
+     "role": "Local marketing expert",
+     "focus": "footfall & word of mouth",
+     "owns": "Will the neighbourhood notice, and what do they hear?",
+     "name": "Marketer",
+     "pillar": "Local marketing expert",
+     "question": "Will the neighbourhood notice, and what do they hear?",
+     "portrait": "marketer",
+     "color": "#f06b3f",
+     "custom": false
+    },
+    {
+     "key": "psych",
+     "short": "Psychologist",
+     "role": "Customer psychologist",
+     "focus": "how guests feel about prices & changes",
+     "owns": "How will regulars feel, and will they come back?",
+     "name": "Psychologist",
+     "pillar": "Customer psychologist",
+     "question": "How will regulars feel, and will they come back?",
+     "portrait": "psych",
+     "color": "#9b5de5",
+     "custom": false
+    },
+    {
+     "key": "ops",
+     "short": "Ops manager",
+     "role": "Food-cost & operations manager",
+     "focus": "unit costs, equipment, staffing",
+     "owns": "Can we deliver it every day at a healthy margin?",
+     "name": "Ops manager",
+     "pillar": "Food-cost & operations manager",
+     "question": "Can we deliver it every day at a healthy margin?",
+     "portrait": "ops",
+     "color": "#1fa67a",
+     "custom": false
+    },
+    {
+     "key": "finance",
+     "short": "Finance",
+     "role": "Finance & cash advisor",
+     "focus": "cash, margin, risk",
+     "owns": "What does it do to cash this month and next quarter?",
+     "name": "Finance",
+     "pillar": "Finance & cash advisor",
+     "question": "What does it do to cash this month and next quarter?",
+     "portrait": "finance",
+     "color": "#4c6a92",
+     "custom": false
+    }
+   ],
+   "engine": "Muse Ember via OpenRouter",
+   "at": 1794284568220
+  },
+  {
+   "type": "phase",
+   "phase": "round1",
+   "label": "Round 1: opening positions",
+   "at": 1794284568222
+  },
+  {
+   "type": "round_start",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_start",
+   "seat": "chef",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_start",
+   "seat": "marketer",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_start",
+   "seat": "psych",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_start",
+   "seat": "ops",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_start",
+   "seat": "finance",
+   "round": 1,
+   "at": 1794284568222
+  },
+  {
+   "type": "seat_done",
+   "round": 1,
+   "seat": "chef",
+   "parsed": {
+    "stance": "no",
+    "call": "I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price.",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "30-30",
+      "quote": "Cold brew $5 not worth it"
+     },
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew $5 not worth it",
+     "source": "reviews.csv L30-30",
+     "verified": true
+    },
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    }
+   ],
+   "text": "I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price.\n\nFrom your files:\n- reviews.csv L30-30: \"Cold brew $5 not worth it\"\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"",
+   "at": 1794284568227
+  },
+  {
+   "type": "seat_done",
+   "round": 1,
+   "seat": "marketer",
+   "parsed": {
+    "stance": "strong no",
+    "call": "I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4.",
+    "optionScores": {
+     "A": 5,
+     "B": 1,
+     "C": 9
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     },
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    },
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568228
+  },
+  {
+   "type": "seat_done",
+   "round": 1,
+   "seat": "psych",
+   "parsed": {
+    "stance": "strong no",
+    "call": "I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good.",
+    "optionScores": {
+     "A": 5,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     },
+     {
+      "file": "reviews.csv",
+      "lines": "15-15",
+      "quote": "Cold brew too expensive now"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    },
+    {
+     "quote": "Cold brew too expensive now",
+     "source": "reviews.csv L15-15",
+     "verified": true
+    }
+   ],
+   "text": "I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"\n- reviews.csv L15-15: \"Cold brew too expensive now\"",
+   "at": 1794284568228
+  },
+  {
+   "type": "seat_done",
+   "round": 1,
+   "seat": "ops",
+   "parsed": {
+    "stance": "strong no",
+    "call": "I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift.",
+    "optionScores": {
+     "A": 5,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     },
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    },
+    {
+     "quote": "2026-10-05,716,89,18",
+     "source": "sales.csv L30-30",
+     "verified": true
+    }
+   ],
+   "text": "I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift.\n\nFrom your files:\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"\n- sales.csv L30-30: \"2026-10-05,716,89,18\"",
+   "at": 1794284568229
+  },
+  {
+   "type": "seat_done",
+   "round": 1,
+   "seat": "finance",
+   "parsed": {
+    "stance": "strong no",
+    "call": "I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash.",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 9
+    },
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     },
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    },
+    {
+     "quote": "2026-10-05,716,89,18",
+     "source": "sales.csv L30-30",
+     "verified": true
+    }
+   ],
+   "text": "I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash.\n\nFrom your files:\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"\n- sales.csv L30-30: \"2026-10-05,716,89,18\"",
+   "at": 1794284568229
+  },
+  {
+   "type": "round_done",
+   "round": 1,
+   "scores": {
+    "A": {
+     "score": 4.6,
+     "math": "(2x4 + 2x5 + 3x5 + 2x5 + 3x4) / 12"
+    },
+    "B": {
+     "score": 1.0,
+     "math": "(2x1 + 2x1 + 3x1 + 2x1 + 3x1) / 12"
+    },
+    "C": {
+     "score": 8.4,
+     "math": "(2x8 + 2x9 + 3x8 + 2x8 + 3x9) / 12"
+    }
+   },
+   "at": 1794284568229
+  },
+  {
+   "type": "phase",
+   "phase": "cruxes",
+   "label": "The Chair is finding the fault lines",
+   "at": 1794284568230
+  },
+  {
+   "type": "cruxes",
+   "cruxes": [
+    {
+     "question": "Should cold brew stay at $5 or drop to $4?",
+     "sides": [
+      {
+       "position": "Keep at $5 price_list.md:6| reviews.csv:3|",
+       "seats": [
+        "chef",
+        "psych",
+        "ops"
+       ]
+      },
+      {
+       "position": "Lower to $4 price_list.md:6| sales.csv:30|",
+       "seats": [
+        "marketer",
+        "finance"
+       ]
+      }
+     ]
+    }
+   ],
+   "unanimous": false,
+   "at": 1794284568231
+  },
+  {
+   "type": "phase",
+   "phase": "round2",
+   "label": "Round 2: the debate",
+   "at": 1794284568231
+  },
+  {
+   "type": "round_start",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_start",
+   "seat": "chef",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_start",
+   "seat": "marketer",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_start",
+   "seat": "psych",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_start",
+   "seat": "ops",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_start",
+   "seat": "finance",
+   "round": 2,
+   "at": 1794284568231
+  },
+  {
+   "type": "seat_done",
+   "round": 2,
+   "seat": "chef",
+   "parsed": {
+    "disagreeWith": "finance",
+    "disagreeLine": "Finance, dropping to $4 won't fix a lukewarm, inconsistent cup. Hold $5, fix quality first, then the price earns trust.",
+    "moved": "no",
+    "stance": "no",
+    "optionScores": {
+     "A": 8,
+     "B": 1,
+     "C": 4
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "30-30",
+      "quote": "Cold brew $5 not worth it"
+     },
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew $5 not worth it",
+     "source": "reviews.csv L30-30",
+     "verified": true
+    },
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "Finance, dropping to $4 won't fix a lukewarm, inconsistent cup. Hold $5, fix quality first, then the price earns trust.\n\nFrom your files:\n- reviews.csv L30-30: \"Cold brew $5 not worth it\"\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568235
+  },
+  {
+   "type": "seat_done",
+   "round": 2,
+   "seat": "marketer",
+   "parsed": {
+    "disagreeWith": "chef",
+    "disagreeLine": "Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back.",
+    "moved": "no",
+    "stance": "strong no",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 9
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     },
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    },
+    {
+     "quote": "2026-10-05,716,89,18",
+     "source": "sales.csv L30-30",
+     "verified": true
+    }
+   ],
+   "text": "Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"\n- sales.csv L30-30: \"2026-10-05,716,89,18\"",
+   "at": 1794284568235
+  },
+  {
+   "type": "seat_done",
+   "round": 2,
+   "seat": "psych",
+   "parsed": {
+    "disagreeWith": "marketer",
+    "disagreeLine": "Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone.",
+    "moved": "no",
+    "stance": "strong no",
+    "optionScores": {
+     "A": 7,
+     "B": 1,
+     "C": 4
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     },
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    },
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568236
+  },
+  {
+   "type": "seat_done",
+   "round": 2,
+   "seat": "ops",
+   "parsed": {
+    "disagreeWith": "finance",
+    "disagreeLine": "Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit.",
+    "moved": "no",
+    "stance": "strong no",
+    "optionScores": {
+     "A": 8,
+     "B": 1,
+     "C": 4
+    },
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     },
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    },
+    {
+     "quote": "2026-10-05,716,89,18",
+     "source": "sales.csv L30-30",
+     "verified": true
+    }
+   ],
+   "text": "Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit.\n\nFrom your files:\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"\n- sales.csv L30-30: \"2026-10-05,716,89,18\"",
+   "at": 1794284568236
+  },
+  {
+   "type": "seat_done",
+   "round": 2,
+   "seat": "finance",
+   "parsed": {
+    "disagreeWith": "ops",
+    "disagreeLine": "Ops, keeping $5 protects price but cash is down: volume fell from 37 to 18, so $5 x 18 is less than $4 x 37.",
+    "moved": "no",
+    "stance": "strong no",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 9
+    },
+    "citations": [
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     },
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "2026-10-05,716,89,18",
+     "source": "sales.csv L30-30",
+     "verified": true
+    },
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "Ops, keeping $5 protects price but cash is down: volume fell from 37 to 18, so $5 x 18 is less than $4 x 37.\n\nFrom your files:\n- sales.csv L30-30: \"2026-10-05,716,89,18\"\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568237
+  },
+  {
+   "type": "round_done",
+   "round": 2,
+   "scores": {
+    "A": {
+     "score": 6.1,
+     "math": "(2x8 + 2x4 + 3x7 + 2x8 + 3x4) / 12"
+    },
+    "B": {
+     "score": 1.0,
+     "math": "(2x1 + 2x1 + 3x1 + 2x1 + 3x1) / 12"
+    },
+    "C": {
+     "score": 6.1,
+     "math": "(2x4 + 2x9 + 3x4 + 2x4 + 3x9) / 12"
+    }
+   },
+   "at": 1794284568237
+  },
+  {
+   "type": "phase",
+   "phase": "draft",
+   "label": "The Chair is drafting a proposal",
+   "at": 1794284568238
+  },
+  {
+   "type": "draft",
+   "draft": {
+    "label": "RESHAPE",
+    "option": "C",
+    "recommendation": "Reshape to a timed $4 test, not a permanent cut or rise, tracking cost per cup; $5 raised from $4 price_list.md|6, volume fell sales.csv|30, reviews call $5 too much reviews.csv|3"
+   },
+   "at": 1794284568239
+  },
+  {
+   "type": "phase",
+   "phase": "round3",
+   "label": "Round 3: the vote",
+   "at": 1794284568239
+  },
+  {
+   "type": "round_start",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_start",
+   "seat": "chef",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_start",
+   "seat": "marketer",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_start",
+   "seat": "psych",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_start",
+   "seat": "ops",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_start",
+   "seat": "finance",
+   "round": 3,
+   "at": 1794284568239
+  },
+  {
+   "type": "seat_done",
+   "round": 3,
+   "seat": "chef",
+   "parsed": {
+    "vote": "amend",
+    "oneLine": "Test $4 only after we fix the cup; price cut alone won't earn trust.",
+    "amendment": "Add quality fix and remake guarantee before any $4 test starts",
+    "optionScores": {
+     "A": 5,
+     "B": 1,
+     "C": 7
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "30-30",
+      "quote": "Cold brew $5 not worth it"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew $5 not worth it",
+     "source": "reviews.csv L30-30",
+     "verified": true
+    }
+   ],
+   "text": "Test $4 only after we fix the cup; price cut alone won't earn trust.\n\nFrom your files:\n- reviews.csv L30-30: \"Cold brew $5 not worth it\"",
+   "at": 1794284568243
+  },
+  {
+   "type": "seat_done",
+   "round": 3,
+   "seat": "marketer",
+   "parsed": {
+    "vote": "endorse",
+    "oneLine": "Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back.",
+    "amendment": "",
+    "optionScores": {
+     "A": 3,
+     "B": 0,
+     "C": 9
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    }
+   ],
+   "text": "Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"",
+   "at": 1794284568243
+  },
+  {
+   "type": "seat_done",
+   "round": 3,
+   "seat": "psych",
+   "parsed": {
+    "vote": "amend",
+    "oneLine": "Regulars already call $5 too much; a timed $4 test shows fairness and gives them a reason to return.",
+    "amendment": "Pair $4 test with espresso reliability fix and apology to returning regulars.",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "Cold brew price jumped to $5, too much"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "Cold brew price jumped to $5, too much",
+     "source": "reviews.csv L3-3",
+     "verified": true
+    }
+   ],
+   "text": "Regulars already call $5 too much; a timed $4 test shows fairness and gives them a reason to return.\n\nFrom your files:\n- reviews.csv L3-3: \"Cold brew price jumped to $5, too much\"",
+   "at": 1794284568244
+  },
+  {
+   "type": "seat_done",
+   "round": 3,
+   "seat": "ops",
+   "parsed": {
+    "vote": "endorse",
+    "oneLine": "Timed $4 test is right, but only if we track cost per cup, waste and staffing before calling it profit.",
+    "amendment": "",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "Timed $4 test is right, but only if we track cost per cup, waste and staffing before calling it profit.\n\nFrom your files:\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568244
+  },
+  {
+   "type": "seat_done",
+   "round": 3,
+   "seat": "finance",
+   "parsed": {
+    "vote": "endorse",
+    "oneLine": "Endorse timed $4 test. $5 cut daily cold brew cash, another rise risks more. Track cost per cup before permanent cut.",
+    "amendment": "",
+    "optionScores": {
+     "A": 4,
+     "B": 1,
+     "C": 8
+    },
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     }
+    ]
+   },
+   "quotes": [
+    {
+     "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+     "source": "price_list.md L6-6",
+     "verified": true
+    }
+   ],
+   "text": "Endorse timed $4 test. $5 cut daily cold brew cash, another rise risks more. Track cost per cup before permanent cut.\n\nFrom your files:\n- price_list.md L6-6: \"- Cold brew $4.00 (raised to $5.00 from week 5)\"",
+   "at": 1794284568245
+  },
+  {
+   "type": "round_done",
+   "round": 3,
+   "scores": {
+    "A": {
+     "score": 4.0,
+     "math": "(2x5 + 2x3 + 3x4 + 2x4 + 3x4) / 12"
+    },
+    "B": {
+     "score": 0.8,
+     "math": "(2x1 + 2x0 + 3x1 + 2x1 + 3x1) / 12"
+    },
+    "C": {
+     "score": 8.0,
+     "math": "(2x7 + 2x9 + 3x8 + 2x8 + 3x8) / 12"
+    }
+   },
+   "at": 1794284568245
+  },
+  {
+   "type": "phase",
+   "phase": "verdict",
+   "label": "The Chair is writing the verdict",
+   "at": 1794284568246
+  },
+  {
+   "type": "verdict",
+   "verdict": {
+    "label": "DON'T",
+    "recommended": "C",
+    "call": "Do not raise cold brew again. Lower to $4 as a one-week test; $5 already cut volume from about 35 to about 20 daily and triggered repeated too-much complaints.",
+    "confidence": 7,
+    "why": [
+     {
+      "seat": "finance",
+      "point": "At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily."
+     },
+     {
+      "seat": "marketer",
+      "point": "Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth."
+     },
+     {
+      "seat": "ops",
+      "point": "Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+     }
+    ],
+    "minority": {
+     "seat": "chef",
+     "quote": "Hold $5, fix quality first, then the price earns trust.",
+     "would_have_to_be_true": "Quality fix alone restores $5 volume without lowering price."
+    },
+    "next_steps": [
+     {
+      "when": "Today",
+      "action": "Stop any further cold brew price increase; confirm $4 test start."
+     },
+     {
+      "when": "This week",
+      "action": "Run $4 for one week, track daily cold brew volume and revenue."
+     },
+     {
+      "when": "In 30 days",
+      "action": "Review test volume, complaints, and cost per cup before deciding."
+     }
+    ],
+    "kill_criteria": "If $4 week does not lift volume above ~25 daily, revert and reassess.",
+    "fights": [
+     {
+      "crux": "Price versus quality as cause of lost sales",
+      "story": "Chef says fix cup first; others say $5 complaints and volume drop show price is the barrier."
+     }
+    ],
+    "conditions": [
+     "Track cost per cup, waste and staffing before claiming profit",
+     "Monitor reviews for cold brew price complaints during test"
+    ],
+    "cheapest_test": "One week at $4, compare daily cold brew units to $5 baseline.",
+    "revisit": "After one-week $4 test",
+    "citations": [
+     {
+      "file": "price_list.md",
+      "lines": "6-6",
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+     },
+     {
+      "file": "reviews.csv",
+      "lines": "3-3",
+      "quote": "2,\"Cold brew price jumped to $5, too much\""
+     },
+     {
+      "file": "sales.csv",
+      "lines": "2-2",
+      "quote": "2026-09-07,758,80,32"
+     },
+     {
+      "file": "sales.csv",
+      "lines": "30-30",
+      "quote": "2026-10-05,716,89,18"
+     }
+    ],
+    "scores": {
+     "A": {
+      "score": 4.0,
+      "math": "(2x5 + 2x3 + 3x4 + 2x4 + 3x4) / 12"
+     },
+     "B": {
+      "score": 0.8,
+      "math": "(2x1 + 2x0 + 3x1 + 2x1 + 3x1) / 12"
+     },
+     "C": {
+      "score": 8.0,
+      "math": "(2x7 + 2x9 + 3x8 + 2x8 + 3x8) / 12"
+     }
+    },
+    "votes": {
+     "endorse": 3,
+     "amend": 2,
+     "dissent": 0
+    },
+    "quotes": [
+     {
+      "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)",
+      "source": "price_list.md L6-6",
+      "verified": true
+     },
+     {
+      "quote": "2,\"Cold brew price jumped to $5, too much\"",
+      "source": "reviews.csv L3-3",
+      "verified": true
+     },
+     {
+      "quote": "2026-09-07,758,80,32",
+      "source": "sales.csv L2-2",
+      "verified": true
+     },
+     {
+      "quote": "2026-10-05,716,89,18",
+      "source": "sales.csv L30-30",
+      "verified": true
+     }
+    ],
+    "amendments": [
+     {
+      "seat": "Chef",
+      "amendment": "Add quality fix and remake guarantee before any $4 test starts",
+      "adopted": false,
+      "reason": "for the owner to decide"
+     },
+     {
+      "seat": "Psychologist",
+      "amendment": "Pair $4 test with espresso reliability fix and apology to returning regulars.",
+      "adopted": false,
+      "reason": "for the owner to decide"
+     }
+    ],
+    "disclaimer": "Role-based AI advisors (Muse Ember via OpenRouter), answering from SAMPLE business files. Not real people; check the numbers before you act."
+   },
+   "seats": [
+    {
+     "key": "chef",
+     "weight": 2,
+     "optionScores": {
+      "A": 5,
+      "B": 1,
+      "C": 7
+     },
+     "oneLine": "Test $4 only after we fix the cup; price cut alone won't earn trust."
+    },
+    {
+     "key": "marketer",
+     "weight": 2,
+     "optionScores": {
+      "A": 3,
+      "B": 0,
+      "C": 9
+     },
+     "oneLine": "Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back."
+    },
+    {
+     "key": "psych",
+     "weight": 3,
+     "optionScores": {
+      "A": 4,
+      "B": 1,
+      "C": 8
+     },
+     "oneLine": "Regulars already call $5 too much; a timed $4 test shows fairness and gives them a reason to return."
+    },
+    {
+     "key": "ops",
+     "weight": 2,
+     "optionScores": {
+      "A": 4,
+      "B": 1,
+      "C": 8
+     },
+     "oneLine": "Timed $4 test is right, but only if we track cost per cup, waste and staffing before calling it profit."
+    },
+    {
+     "key": "finance",
+     "weight": 3,
+     "optionScores": {
+      "A": 4,
+      "B": 1,
+      "C": 8
+     },
+     "oneLine": "Endorse timed $4 test. $5 cut daily cold brew cash, another rise risks more. Track cost per cup before permanent cut."
+    }
+   ],
+   "at": 1794284568247
+  },
+  {
+   "type": "end",
+   "at": 1794284568248
+  }
+ ],
+ "votes": {}
+}

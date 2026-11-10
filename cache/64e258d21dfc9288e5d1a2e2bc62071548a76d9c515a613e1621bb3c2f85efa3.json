@@ -1,0 +1,65 @@
+{
+ "mode": "open",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "seat": {
+   "role": "Finance & cash advisor",
+   "short": "Finance",
+   "focus": "cash, margin, risk",
+   "owns": "What does it do to cash this month and next quarter?",
+   "persona": "You protect cash flow for small owners. You compare revenue, volume and margin before and after a change, and you size the downside."
+  }
+ },
+ "parsed": {
+  "stance": "strong no",
+  "call": "I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash.",
+  "optionScores": {
+   "A": 4,
+   "B": 1,
+   "C": 9
+  },
+  "citations": [
+   {
+    "file": "price_list.md",
+    "lines": "6-6",
+    "quote": "- Cold brew $4.00 (raised to $5.00 from week 5)"
+   },
+   {
+    "file": "sales.csv",
+    "lines": "30-30",
+    "quote": "2026-10-05,716,89,18"
+   }
+  ]
+ },
+ "raw": "{\"stance\":\"strong no\",\"call\":\"I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash.\",\"optionScores\":{\"A\":4,\"B\":1,\"C\":9},\"citations\":[{\"file\":\"price_list.md\",\"lines\":\"6-6\",\"quote\":\"- Cold brew $4.00 (raised to $5.00 from week 5)\"},{\"file\":\"sales.csv\",\"lines\":\"30-30\",\"quote\":\"2026-10-05,716,89,18\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:05",
+  "generation_id": "gen-1794284283-cIevEMKp1M8p7yvIDm2J",
+  "model": "meta/muse-ember",
+  "mode": "open",
+  "prompt_tokens": 1902,
+  "completion_tokens": 865,
+  "cost": 0.0006227,
+  "latency_s": 2.7,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0006227,
+  "total": 0.003606
+ }
+}

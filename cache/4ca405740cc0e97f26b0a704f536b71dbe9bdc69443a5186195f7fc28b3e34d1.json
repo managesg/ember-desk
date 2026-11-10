@@ -1,0 +1,114 @@
+{
+ "mode": "vote",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "proposal": "{\"label\": \"RESHAPE\", \"option\": \"C\", \"recommendation\": \"Reshape to a timed $4 test, not a permanent cut or rise, tracking cost per cup; $5 raised from $4 price_list.md|6, volume fell sales.csv|30, reviews call $5 too much reviews.csv|3\"}",
+  "debate": [
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "[no] I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "[strong no] I say no to another rise. Neighbours already hear $5 as too much and cold brew sales fell, so raising hurts footfall and word of mouth. Test dropping back to $4."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "[strong no] I see regulars already calling $5 too much and sales dropping, so another raise will push them away for good."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "[strong no] I won't raise it again. Volume fell from about 35 to about 20 a day after $5, so another hike kills throughput and margin per shift."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "[strong no] I say no raise. At $5 volume fell from ~35 to ~21 a day, so cold brew cash fell from ~$140 to ~$105 daily. Raising more risks more loss; dropping to $4 likely restores cash."
+   },
+   {
+    "seat": "chef",
+    "short": "Chef",
+    "line": "to finance: Finance, dropping to $4 won't fix a lukewarm, inconsistent cup. Hold $5, fix quality first, then the price earns trust."
+   },
+   {
+    "seat": "marketer",
+    "short": "Marketer",
+    "line": "to chef: Chef, keeping $5 keeps the complaint alive. Neighbours already say $5 is too much, so test $4 and let regulars bring friends back."
+   },
+   {
+    "seat": "psych",
+    "short": "Psychologist",
+    "line": "to marketer: Marketer, dropping to $4 won't win back regulars who already left over broken espresso; price isn't their breaking point alone."
+   },
+   {
+    "seat": "ops",
+    "short": "Ops manager",
+    "line": "to finance: Finance, revenue isn't margin. At $5 we sell ~20, at $4 ~35, but without cost per cup, waste and staffing, you can't claim $4 restores profit."
+   },
+   {
+    "seat": "finance",
+    "short": "Finance",
+    "line": "to ops: Ops, keeping $5 protects price but cash is down: volume fell from 37 to 18, so $5 x 18 is less than $4 x 37."
+   }
+  ],
+  "seat": {
+   "role": "Local marketing expert",
+   "short": "Marketer",
+   "focus": "footfall & word of mouth",
+   "owns": "Will the neighbourhood notice, and what do they hear?",
+   "persona": "You grow neighbourhood businesses with signage, reviews, local social posts and regulars who bring friends. You think in cheap, testable moves."
+  }
+ },
+ "parsed": {
+  "vote": "endorse",
+  "oneLine": "Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back.",
+  "amendment": "",
+  "optionScores": {
+   "A": 3,
+   "B": 0,
+   "C": 9
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   }
+  ]
+ },
+ "raw": "{\"vote\":\"endorse\",\"oneLine\":\"Neighbours already hear $5 as too much. Test $4 timed, track footfall, let regulars bring friends back.\",\"amendment\":\"\",\"optionScores\":{\"A\":3,\"B\":0,\"C\":9},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:19",
+  "generation_id": "gen-1794284298-PKE81FNJzBGWOy77afSc",
+  "model": "meta/muse-ember",
+  "mode": "vote",
+  "prompt_tokens": 2394,
+  "completion_tokens": 388,
+  "cost": 0.0004334,
+  "latency_s": 1.5,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0004334,
+  "total": 0.0092138
+ }
+}

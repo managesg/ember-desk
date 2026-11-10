@@ -1,0 +1,65 @@
+{
+ "mode": "open",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "industry": "Restaurant / cafe",
+  "tone": "Straight talk: plain, direct, no fluff.",
+  "seat": {
+   "role": "Michelin-level chef",
+   "short": "Chef",
+   "focus": "menu & quality",
+   "owns": "Is what we serve worth the price on the board?",
+   "persona": "You have run kitchens at the highest level. You judge recipes, consistency, portion and the guest's first sip or bite. You care about quality before volume."
+  }
+ },
+ "parsed": {
+  "stance": "no",
+  "call": "I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price.",
+  "optionScores": {
+   "A": 4,
+   "B": 1,
+   "C": 8
+  },
+  "citations": [
+   {
+    "file": "reviews.csv",
+    "lines": "30-30",
+    "quote": "Cold brew $5 not worth it"
+   },
+   {
+    "file": "reviews.csv",
+    "lines": "3-3",
+    "quote": "Cold brew price jumped to $5, too much"
+   }
+  ]
+ },
+ "raw": "{\"stance\":\"no\",\"call\":\"I would not raise it again. At $5 guests already say it is not worth it and sales fell, so quality and trust are not backing a higher board price.\",\"optionScores\":{\"A\":4,\"B\":1,\"C\":8},\"citations\":[{\"file\":\"reviews.csv\",\"lines\":\"30-30\",\"quote\":\"Cold brew $5 not worth it\"},{\"file\":\"reviews.csv\",\"lines\":\"3-3\",\"quote\":\"Cold brew price jumped to $5, too much\"}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:04",
+  "generation_id": "gen-1794284283-e5G2ArdhOLPvoKzykn55",
+  "model": "meta/muse-ember",
+  "mode": "open",
+  "prompt_tokens": 1903,
+  "completion_tokens": 643,
+  "cost": 0.0005118,
+  "latency_s": 2.0,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0005118,
+  "total": 0.0018530999999999999
+ }
+}

@@ -1,0 +1,51 @@
+{
+ "mode": "learn",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "verdict": {
+   "label": "DON'T",
+   "call": "Do not raise cold brew again. Lower to $4 as a one-week test; $5 already cut volume from about 35 to about 20 daily and triggered repeated too-much complaints.",
+   "next_steps": [
+    {
+     "when": "Today",
+     "action": "Stop any further cold brew price increase; confirm $4 test start."
+    },
+    {
+     "when": "This week",
+     "action": "Run $4 for one week, track daily cold brew volume and revenue."
+    },
+    {
+     "when": "In 30 days",
+     "action": "Review test volume, complaints, and cost per cup before deciding."
+    }
+   ]
+  }
+ },
+ "parsed": {
+  "title": "10-Minute Lesson: Test Cold Brew Price With Your Own Files",
+  "why": "Teaches you to test price decisions with your own sales and reviews, not gut feel, using cited evidence before changing prices again.",
+  "steps": [
+   "2 min: Upload sales.csv and price_list.md; ask AI to compare cold brew volume before/after $5 change [price_list.md:6][sales.csv:30]",
+   "3 min: Add reviews.csv; ask AI to list repeated complaints with line citations, ignoring one-off praise [reviews.csv:3]",
+   "3 min: Ask AI for verdict and one-week test plan; check every cited number against files [sales.csv:45]",
+   "2 min: Decide, record test dates, track daily volume and revenue before any new increase [price_list.md:6]"
+  ],
+  "prompt_to_copy": "Using only my files [SALES_FILE], [PRICE_LIST], and [REVIEWS], decide whether to raise [PRODUCT] price again. Compare volume and revenue before/after [PRICE_CHANGE_DATE]. List repeated complaints with file line citations. Give verdict, risks, and a one-week test with daily metrics to track. Do not use outside data.",
+  "try_next": "Next: Run $4 test for one week, then review volume, revenue, and complaints [price_list.md:6]"
+ },
+ "raw": "{\"title\":\"10-Minute Lesson: Test Cold Brew Price With Your Own Files\",\"why\":\"Teaches you to test price decisions with your own sales and reviews, not gut feel, using cited evidence before changing prices again.\",\"steps\":[\"2 min: Upload sales.csv and price_list.md; ask AI to compare cold brew volume before/after $5 change [price_list.md:6][sales.csv:30]\",\"3 min: Add reviews.csv; ask AI to list repeated complaints with line citations, ignoring one-off praise [reviews.csv:3]\",\"3 min: Ask AI for verdict and one-week test plan; check every cited number against files [sales.csv:45]\",\"2 min: Decide, record test dates, track daily volume and revenue before any new increase [price_list.md:6]\"],\"prompt_to_copy\":\"Using only my files [SALES_FILE], [PRICE_LIST], and [REVIEWS], decide whether to raise [PRODUCT] price again. Compare volume and revenue before/after [PRICE_CHANGE_DATE]. List repeated complaints with file line citations. Give verdict, risks, and a one-week test with daily metrics to track. Do not use outside data.\",\"try_next\":\"Next: Run $4 test for one week, then review volume, revenue, and complaints [price_list.md:6]\"}",
+ "meta": {
+  "ts": "2026-11-09T23:19:18",
+  "generation_id": "gen-1794284356-5dpV0JIvgbV7NsaDkr7G",
+  "model": "meta/muse-ember",
+  "mode": "learn",
+  "prompt_tokens": 1924,
+  "completion_tokens": 1216,
+  "cost": 0.0008004,
+  "latency_s": 3.1,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0008004,
+  "total": 0.0129604
+ }
+}

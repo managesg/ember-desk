@@ -1,0 +1,94 @@
+{
+ "mode": "chair",
+ "payload": {
+  "question": "Should we raise cold brew prices again?",
+  "industry": "Restaurant / cafe",
+  "advisors": [
+   {
+    "id": "chef",
+    "role": "Michelin-level chef",
+    "owns": "Is what we serve worth the price on the board?"
+   },
+   {
+    "id": "marketer",
+    "role": "Local marketing expert",
+    "owns": "Will the neighbourhood notice, and what do they hear?"
+   },
+   {
+    "id": "psych",
+    "role": "Customer psychologist",
+    "owns": "How will regulars feel, and will they come back?"
+   },
+   {
+    "id": "ops",
+    "role": "Food-cost & operations manager",
+    "owns": "Can we deliver it every day at a healthy margin?"
+   },
+   {
+    "id": "finance",
+    "role": "Finance & cash advisor",
+    "owns": "What does it do to cash this month and next quarter?"
+   }
+  ]
+ },
+ "parsed": {
+  "title": "Should we raise cold brew prices again?",
+  "framing": "Decide whether to raise cold brew again after increase to $5 from week 5 [price_list.md:6]; reviews call $5 too much [reviews.csv:3] and sales show volume dropping to ~20 [sales.csv:30].",
+  "options": [
+   {
+    "id": "A",
+    "label": "Keep price at $5"
+   },
+   {
+    "id": "B",
+    "label": "Raise above $5"
+   },
+   {
+    "id": "C",
+    "label": "Lower back to $4"
+   }
+  ],
+  "seated": [
+   {
+    "id": "chef",
+    "why": "Judges if cold brew quality justifies higher board price [price_list.md:6]",
+    "weight": 2
+   },
+   {
+    "id": "marketer",
+    "why": "Neighbourhood already noticed $5 jump in reviews [reviews.csv:3]",
+    "weight": 2
+   },
+   {
+    "id": "psych",
+    "why": "Regulars complain $5 not worth it [reviews.csv:30]",
+    "weight": 3
+   },
+   {
+    "id": "ops",
+    "why": "Volume fell after increase, affecting daily delivery margin [sales.csv:30]",
+    "weight": 2
+   },
+   {
+    "id": "finance",
+    "why": "Cash impact depends on volume drop after $5 [sales.csv:30]",
+    "weight": 3
+   }
+  ]
+ },
+ "raw": "{\"title\":\"Should we raise cold brew prices again?\",\"framing\":\"Decide whether to raise cold brew again after increase to $5 from week 5 [price_list.md:6]; reviews call $5 too much [reviews.csv:3] and sales show volume dropping to ~20 [sales.csv:30].\",\"options\":[{\"id\":\"A\",\"label\":\"Keep price at $5\"},{\"id\":\"B\",\"label\":\"Raise above $5\"},{\"id\":\"C\",\"label\":\"Lower back to $4\"}],\"seated\":[{\"id\":\"chef\",\"why\":\"Judges if cold brew quality justifies higher board price [price_list.md:6]\",\"weight\":2},{\"id\":\"marketer\",\"why\":\"Neighbourhood already noticed $5 jump in reviews [reviews.csv:3]\",\"weight\":2},{\"id\":\"psych\",\"why\":\"Regulars complain $5 not worth it [reviews.csv:30]\",\"weight\":3},{\"id\":\"ops\",\"why\":\"Volume fell after increase, affecting daily delivery margin [sales.csv:30]\",\"weight\":2},{\"id\":\"finance\",\"why\":\"Cash impact depends on volume drop after $5 [sales.csv:30]\",\"weight\":3}]}",
+ "meta": {
+  "ts": "2026-11-09T23:18:01",
+  "generation_id": "gen-1794284279-yYI9qO9B11AywEgzicgC",
+  "model": "meta/muse-ember",
+  "mode": "chair",
+  "prompt_tokens": 1959,
+  "completion_tokens": 1102,
+  "cost": 0.0007469,
+  "latency_s": 3.5,
+  "cache_hit": false,
+  "provider": "openrouter",
+  "cost_this_call": 0.0007469,
+  "total": 0.0013413000000000001
+ }
+}
