@@ -6,7 +6,7 @@ Ask a real decision ("Should we raise cold brew prices again?"). The Chair reads
 
 Runs on **Muse Ember (`meta/muse-ember`) via OpenRouter**. Each advisor turn is one short, cheap call.
 
-**Demo video (1 min):** [demo/ember_council_demo.webm](demo/ember_council_demo.webm)
+**Demo video (1 min, 1280x720, replayed from cache at $0):** [demo/ember_council_demo.webm](demo/ember_council_demo.webm) · [mp4](demo/ember_council_demo.mp4) · raw: https://github.com/managesg/ember-desk/raw/main/demo/ember_council_demo.mp4
 
 ## What it does
 
@@ -43,7 +43,9 @@ The key stays server-side and is never logged. A budget guard refuses calls once
 |---|---|
 | Model | `meta/muse-ember` via OpenRouter |
 | Per-call log | `proof/council_log.jsonl`: generation id, model, provider, tokens, cost, latency |
-| Council build + test spend | about $0.013 over 21 live calls |
+| Council build + test spend | $0.0130 logged over 21 live calls (1 Chair proposal, 5 openings, fault lines, 5 rebuttals, draft, 5 votes, verdict, Learn it, plus one v0 call); ~$0.0006 per call, ~1.9-2.4k prompt tokens each |
+| Key usage over the live run | `proof/council_key_before.json` -> `council_key_after.json`: +$0.0147 (key-level usage includes a little lag and rounding) |
+| One full council | 19 calls, about $0.012; a cached replay costs $0 |
 | Total for this account tonight (both projects, all tests) | about $0.13 of the $1 |
 | Earlier Ember Desk log | `proof/openrouter_log.jsonl`, key snapshots `proof/key_before.json` / `key_after.json` |
 
