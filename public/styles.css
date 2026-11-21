@@ -585,3 +585,41 @@ button { font: inherit; cursor: pointer; }
   .stepper li { padding: 6px 8px; font-size: 12px; }
   .usage { max-width: 150px; overflow: hidden; text-overflow: ellipsis; }
 }
+
+/* ---------------- Company Brain ---------------- */
+.brain-dialog { overflow: auto; max-height: 94vh; padding: 16px 22px; }
+.brain-dialog h3 { font-size: 20px; }
+.brain-dialog > div > .muted { margin: 2px 0 0; font-size: 13px; }
+.brain-dialog .proof-kpis { margin: 8px 0; gap: 8px; }
+.brain-dialog .proof-kpis div { min-width: 120px; padding: 6px 12px; }
+.brain-dialog .proof-kpis b { font-size: 20px; }
+.brain-dialog .btabs { margin: 8px 0; }
+.brain-dialog .bcard { margin: 8px 0; padding: 10px 14px; }
+.btabs { display: flex; gap: 4px; align-items: center; border-bottom: 1px solid var(--hairline); margin: 12px 0; flex-wrap: wrap; }
+.btabs button[role=tab] { background: none; border: 0; border-bottom: 2px solid transparent; color: var(--ink-mute); padding: 8px 12px; font-weight: 600; }
+.btabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.btabs .grow { flex: 1; }
+.btabs .ghost { padding: 4px 10px; }
+.badge { font-style: normal; background: var(--amend); color: #1b1300; border-radius: 999px; padding: 0 7px; font-size: 11px; font-weight: 700; }
+.bcard { background: var(--surface-2); border: 1px solid var(--hairline); border-radius: 12px; padding: 14px 16px; margin: 12px 0; }
+.bcard h4 { font: 600 16px/1.2 var(--font-display); color: var(--ink); margin: 0 0 8px; }
+.bcard h4.sub { font-size: 14px; margin-top: 12px; }
+.bcard p { margin: 6px 0; }
+.small { font-size: 12px; }
+.bchip { display: inline-block; max-width: none; overflow: visible; text-overflow: clip; font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 999px; border: 1px solid var(--hairline-strong); color: var(--ink-soft); white-space: nowrap; }
+.bchip.read { color: var(--go); border-color: rgba(79, 199, 154, .4); }
+.bchip.draft { color: var(--amend); border-color: rgba(224, 169, 74, .4); }
+.bchip.run { color: var(--dissent); border-color: rgba(224, 103, 108, .4); }
+.btable { width: 100%; border-collapse: collapse; font-size: 13px; }
+.btable th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); padding: 6px 8px; }
+.btable td { padding: 8px; border-top: 1px solid var(--hairline); vertical-align: top; color: var(--ink-soft); }
+.btable td b { color: var(--ink); font-weight: 600; display: block; }
+.btable td small { display: block; color: var(--ink-mute); font-size: 11.5px; }
+.cfg-row .check, label.check { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--ink-soft); font-weight: 400; }
+.ghost.danger { color: var(--dissent); border-color: rgba(224, 103, 108, .4); }
+.pnote { border: 1px solid var(--hairline-strong); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
+.pnote p { color: var(--ink-soft); }
+.nlist { margin: 0; padding-left: 18px; font-size: 13px; }
+pre.cmd { background: var(--canvas); border: 1px solid var(--hairline-strong); border-radius: 8px; padding: 10px 12px; font: 13px/1.5 "IBM Plex Mono", monospace; color: var(--accent); white-space: pre-wrap; word-break: break-all; }
+.v-suggest .ghost { margin: 4px 6px 0 0; }
+.mono.small { font: 12px "IBM Plex Mono", monospace; }

@@ -33,3 +33,10 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+DESIGN INSPIRATION (no code taken)
+
+Company Brain was designed after reading these projects. Nothing was copied or vendored, so no licence text is carried over:
+henrydaum/second-brain, maks-mk/kgbagent, elie222/inbox-zero, itechmeat/open-second-brain, safhac/privemail, AnshMNSoni/email-agent.
+Python standard library modules (sqlite3, imaplib, zipfile, xml.etree) and the optional pypdf / keyring packages are used as installed, not bundled.
+

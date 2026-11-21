@@ -724,6 +724,7 @@ function onVerdict(ev) {
       <div class="v-sec"><h3>Next steps</h3><ul class="v-steps">${v.next_steps.slice(0, 3).map((n) => `<li><b>${esc(n.when)}</b> ${short(n.action, 120)}</li>`).join("")}</ul>
         <p class="v-meta"><b>Kill it if:</b> ${short(v.kill_criteria, 140)}</p></div>
     </div>
+    ${v.suggested_actions?.length ? `<div class="v-sec v-suggest"><h3>Suggested tools</h3><p class="muted">The advisors can only suggest. Nothing runs until you approve the exact command.</p>${v.suggested_actions.map((a) => `<button type="button" class="ghost" data-suggest="${esc(a.id)}">${esc(a.name)}: review and approve</button>`).join(" ")}</div>` : ""}
     ${v.quotes?.length ? `<div class="v-sec v-files"><h3>From your files</h3><ul class="qcheck">${v.quotes.map((q) => `<li class="${q.verified ? "" : "bad"}"><b>${esc(q.source)}</b> "${esc(shorten(q.quote, 120))}"</li>`).join("")}</ul></div>` : ""}
     <div id="learnBody"></div>
     <details class="v-more"><summary>Full detail</summary>

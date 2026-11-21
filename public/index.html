@@ -28,6 +28,7 @@
     <div class="top-actions">
       <span class="usage" id="usage" title="Tokens used by this app since it started"></span>
       <button class="ghost icon" id="guideBtn" type="button" title="How Ember Council works" aria-label="How Ember Council works">?</button>
+      <button class="ghost" id="brainBtn" type="button">Company Brain</button>
       <button class="ghost" id="councilBtn" type="button">Your council</button>
       <button class="ghost" id="proofBtn" type="button">Proof</button>
       <button class="ghost" id="historyBtn" type="button">Past sessions</button>
@@ -165,6 +166,16 @@
     <form method="dialog"><button class="ghost">Close</button></form>
   </dialog>
 
+  <dialog id="brainDialog" class="card-dialog wide brain-dialog">
+    <div id="brainBody"><p class="muted">Loading...</p></div>
+    <form method="dialog"><button class="ghost">Close</button></form>
+  </dialog>
+
+  <dialog id="approveDialog" class="card-dialog">
+    <div id="approveBody"></div>
+    <form method="dialog"><button class="ghost">Close</button></form>
+  </dialog>
+
   <dialog id="proofDialog" class="card-dialog wide">
     <div id="proofBody"></div>
     <form method="dialog"><button class="ghost">Close</button></form>
@@ -174,5 +185,6 @@
   
 
   <script src="/app.js" type="module"></script>
+  <script src="/brain.js" type="module"></script>
 </body>
 </html>

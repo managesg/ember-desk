@@ -102,6 +102,7 @@ def call(messages, mode):
                 try: why = json.loads(e.read()).get("error", {}).get("message", "")[:220]
                 except Exception: why = ""
                 if PROV == "local" and e.code == 404: why = why or "model not installed: run `ollama pull %s`" % MODEL
+                if "provider" in body and e.code in (400, 404): why += " Company Brain asks OpenRouter for providers that do not store prompts. Open Company Brain > Engine and privacy and untick that box, or use a local engine."
                 raise RuntimeError("%s answered HTTP %s. %s" % (config()["label"], e.code, why))
             time.sleep(3)
         except urllib.error.URLError as e:
@@ -139,9 +140,10 @@ def messages(mode, p):
     raise ValueError("unknown mode")
 def ask(mode, payload):
     if mode not in SYS: raise ValueError("unknown mode")
-    p = pack(payload); cdir = os.path.join(ROOT, "cache") if p == pack() else os.path.join(brain.HOME, "brain", "cache")  # answers built on company data stay out of the tracked cache/
-    ck = os.path.join(cdir, hashlib.sha256((MODEL + mode + json.dumps(payload, sort_keys=True) + p).encode()).hexdigest() + ".json")
-    if os.path.exists(ck) and not MOCK:
+    p = pack(payload); name = hashlib.sha256((MODEL + mode + json.dumps(payload, sort_keys=True) + p).encode()).hexdigest() + ".json"
+    pub, priv = os.path.join(ROOT, "cache", name), os.path.join(brain.HOME, "brain", "cache", name)  # new answers go to the private cache once a Company Brain exists, so nothing from it lands in the tracked cache/
+    ck = None if MOCK else next((x for x in (pub, priv) if os.path.exists(x)), None)
+    if ck:
         c = json.load(open(ck, encoding="utf8")); c["meta"].update(cache_hit=True, cost_this_call=0, total=spent()); return c
     if CACHE_ONLY: raise RuntimeError("cache miss in CACHE_ONLY mode (%s)" % mode)
     sysmsg, user = messages(mode, payload)
@@ -158,7 +160,7 @@ def ask(mode, payload):
     rec["cost_this_call"] = cost; rec["total"] = spent()
     out = {"mode": mode, "payload": payload, "parsed": parsed, "raw": raw, "meta": rec}
     if parsed is not None and not MOCK:
-        os.makedirs(cdir, exist_ok=True); json.dump(out, open(ck, "w", encoding="utf8"), indent=1)
+        wp = priv if (p != pack() or brain.enabled()) else pub; os.makedirs(os.path.dirname(wp), exist_ok=True); json.dump(out, open(wp, "w", encoding="utf8"), indent=1)
     return out
 def must(mode, payload):
     d = ask(mode, payload)
@@ -254,7 +256,7 @@ def run_council(s, prop, seats, tone, industry):
         v["suggested_actions"] = brain.suggested(v.get("suggested_actions")); brain.propose(v.pop("memory_proposals", None), s["id"])  # advisors suggest; the owner approves and runs
         v["amendments"] = [{"seat": short(k), "amendment": last[k]["amendment"], "adopted": False, "reason": "for the owner to decide"} for k in seats if mode == "full" and last[k].get("amendment")]
         for f, d in (("why", []), ("next_steps", []), ("fights", []), ("conditions", []), ("minority", {"seat": "", "quote": "", "would_have_to_be_true": ""})): v.setdefault(f, d)
-        v["disclaimer"] = "Role-based AI advisors (%s), answering from SAMPLE business files. Not real people; check the numbers before you act." % config()["label"]
+        v["disclaimer"] = "Role-based AI advisors (%s), answering from %s. Not real people; check the numbers before you act." % (config()["label"], "the sample files plus your Company Brain" if brain.enabled() else "SAMPLE business files")
         line = lambda k: last[k].get("oneLine") or last[k].get("disagreeLine") or ""
         emit(s, {"type": "verdict", "verdict": v, "seats": [{"key": k, "weight": weights[k]["weight"], "optionScores": last[k].get("optionScores"), "oneLine": line(k)} for k in seats]})
         s["status"] = "done"; s["verdict_label"] = v.get("label")
@@ -330,6 +332,7 @@ def clean_seat(a):
     return d
 
 LOOPBACK_ONLY = os.environ.get("HOST", "127.0.0.1") in ("127.0.0.1", "localhost", "::1")
+EXTRA_HOSTS = tuple(h.strip().lower() for h in os.environ.get("EMBER_ALLOWED_HOSTS", "").split(",") if h.strip())  # e.g. a tunnel name for Zapier/Make transcript posts
 class H(SimpleHTTPRequestHandler):
     def log_message(self, *a): pass
     def send(self, code, body):
@@ -339,7 +342,7 @@ class H(SimpleHTTPRequestHandler):
     def guard(self):  # DNS-rebinding and cross-site POST protection (skipped only when HOST is deliberately non-loopback)
         host = (self.headers.get("Host") or "").lower()
         if LOOPBACK_ONLY:
-            if (host.split("]")[0] + "]" if host.startswith("[") else host.rsplit(":", 1)[0]) not in ("127.0.0.1", "localhost", "[::1]"): self.send(403, {"error": "bad Host header"}); return False
+            if (host.split("]")[0] + "]" if host.startswith("[") else host.rsplit(":", 1)[0]) not in ("127.0.0.1", "localhost", "[::1]") + EXTRA_HOSTS: self.send(403, {"error": "bad Host header (set EMBER_ALLOWED_HOSTS to allow a tunnel name)"}); return False
             o = self.headers.get("Origin")
             if self.command == "POST" and o and urlparse(o).netloc.lower() != host: self.send(403, {"error": "cross-site request refused"}); return False
         return True
