@@ -6,7 +6,8 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
-ROOT = os.path.dirname(os.path.abspath(__file__)); PUB = os.path.join(ROOT, "public"); HIST = os.path.join(ROOT, "data", "history")
+import brain  # Company Brain: notes, folders, email (IMAP only), approved desktop actions, redaction
+ROOT = os.path.dirname(os.path.abspath(__file__)); PUB = os.path.join(ROOT, "public"); HIST = os.path.join(brain.HOME, "data", "history")
 _ENV_BASE = os.environ.get("LLM_BASE_URL", "").rstrip("/")
 PROVIDERS = {  # three engines; the owner switches in Your council -> Engine
  "openrouter": {"label": "Muse Ember via OpenRouter", "base": "https://openrouter.ai/api/v1", "model": "meta/muse-ember"},
@@ -22,7 +23,8 @@ def use(pid):
 use(PROV)
 CAP = float(os.environ.get("BUDGET_CAP", "0.20")); HARD = 0.95  # rebuild cap; whole project (old + new log) must stay under $0.95
 CACHE_ONLY = os.environ.get("CACHE_ONLY") == "1"
-LOG = os.path.join(ROOT, "proof", "council_log.jsonl"); OLD_LOG = os.path.join(ROOT, "proof", "openrouter_log.jsonl")
+MOCK = os.environ.get("LLM_MOCK") == "1"  # deterministic offline engine for tests and screenshots: no network, no cost, no cache or proof writes
+LOG = os.path.join(brain.HOME, "logs", "mock_calls.jsonl") if MOCK else os.path.join(ROOT, "proof", "council_log.jsonl"); OLD_LOG = os.path.join(ROOT, "proof", "openrouter_log.jsonl")
 CITE = '"citations":[{"file":str,"lines":"a-b","quote":str (exact words copied from that line)}]'
 RULES = " Answer ONLY from the owner's files, citing them with the N| line numbers. Never name or imitate real people. Return JSON only: no markdown, no code fences."
 SEAT = 'You are the {role} ("{short}") on the advisor council of a {biz} (your focus: {focus}). The question you own: "{owns}". {persona} Tone: {tone} '
@@ -49,6 +51,7 @@ SYS = {
 MAXTOK = {"test": 800, "chair": 3000, "open": 3000, "cruxes": 3000, "rebut": 3000, "draft": 2500, "vote": 2500, "verdict": 5000, "learn": 4000}  # reasoning tokens count against max_tokens
 
 def key():
+    if MOCK: return "mock"
     if PROV == "meta":  # env first, else this PC's muse CLI auth file; never printed or logged
         k = os.environ.get("META_API_KEY")
         if not k:
@@ -62,12 +65,12 @@ def key():
         except Exception: k = ""
     return k or os.environ.get("LLM_API_KEY") or ""
 def data_files(): return [p for p in sorted(glob.glob(os.path.join(ROOT, "data", "*"))) if os.path.isfile(p)]
-def pack():
+def pack(payload=None):
     out = []
     for p in data_files():
         out.append("=== FILE: %s ===" % os.path.basename(p))
         out += ["%d| %s" % (i, l) for i, l in enumerate(open(p, encoding="utf8").read().splitlines(), 1)]
-    return "\n".join(out)
+    return "\n".join(out) + (brain.context((payload or {}).get("question")) if payload else "")
 def spent(path=None):
     path = path or LOG
     return sum(json.loads(l).get("cost") or 0 for l in open(path)) if os.path.exists(path) else 0.0
@@ -80,11 +83,18 @@ def api(path, body=None):
         headers={"Authorization": "Bearer " + key(), "Content-Type": "application/json"})
     return json.load(urllib.request.urlopen(r, timeout=180))
 LOCK = threading.Lock()
+def is_cloud(): return (urlparse(BASE).hostname or "") not in ("localhost", "127.0.0.1", "::1") and not MOCK
 def call(messages, mode):
     if spent() >= CAP or spent() + spent(OLD_LOG) >= HARD: raise RuntimeError("budget guard: spent $%.4f >= cap $%.2f" % (spent(), CAP))
+    t0 = time.time()
+    if MOCK:
+        import mock_llm; txt = mock_llm.reply(messages, mode); rec = {"ts": time.strftime("%Y-%m-%dT%H:%M:%S"), "generation_id": "mock-" + uuid.uuid4().hex[:8], "model": MODEL, "mode": mode, "prompt_tokens": 0, "completion_tokens": 0, "cost": 0, "latency_s": 0, "cache_hit": False, "provider": "mock"}
+        with LOCK: os.makedirs(os.path.dirname(LOG), exist_ok=True); open(LOG, "a").write(json.dumps(rec) + "\n")
+        return txt, rec
+    if is_cloud() and brain.privacy()["redact"]: messages = brain.redact_messages(messages)  # emails, phones, card and IBAN numbers never leave the PC
     body = {"model": MODEL, "messages": messages, "temperature": 0.3, "max_tokens": MAXTOK[mode]}
     if OPENROUTER: body.update(reasoning={"effort": "low"}, usage={"include": True})
-    t0 = time.time()
+    if OPENROUTER and brain.enabled() and brain.privacy()["deny_collection"]: body["provider"] = {"data_collection": "deny"}  # only providers that do not store prompts; fails closed
     for attempt in (0, 1, 2):
         try: r = api("/chat/completions", body); break
         except urllib.error.HTTPError as e:
@@ -122,15 +132,16 @@ def messages(mode, p):
     if mode == "rebut": return seat_sys(mode, p), q + opts + "\n=== OPENINGS ===\n" + lines("openings") + "\n=== FAULT LINES ===\n" + clip(p.get("cruxes"), 600)
     if mode == "draft": return SYS[mode], q + opts + "\n=== DEBATE ===\n" + lines("debate")
     if mode == "vote": return seat_sys(mode, p), q + opts + "\n=== PROPOSAL ===\n" + clip(p.get("proposal"), 400) + "\n=== DEBATE ===\n" + lines("debate")
-    if mode == "verdict": return SYS[mode], q + opts + "\n=== THE COUNCIL ===\n" + lines("record") + "\n=== SCORES ===\n" + clip(p.get("scores"), 400)
+    if mode == "verdict": return SYS[mode] + brain.verdict_extra(), q + opts + "\n=== THE COUNCIL ===\n" + lines("record") + "\n=== SCORES ===\n" + clip(p.get("scores"), 400)
     if mode == "learn":
         v = p.get("verdict") or {}
         return SYS["learn"], q + "\n=== VERDICT ===\n%s: %s\nNext steps: %s" % (clip(v.get("label"), 10), clip(v.get("call"), 500), clip(v.get("next_steps"), 700))
     raise ValueError("unknown mode")
 def ask(mode, payload):
     if mode not in SYS: raise ValueError("unknown mode")
-    p = pack(); ck = os.path.join(ROOT, "cache", hashlib.sha256((MODEL + mode + json.dumps(payload, sort_keys=True) + p).encode()).hexdigest() + ".json")
-    if os.path.exists(ck):
+    p = pack(payload); cdir = os.path.join(ROOT, "cache") if p == pack() else os.path.join(brain.HOME, "brain", "cache")  # answers built on company data stay out of the tracked cache/
+    ck = os.path.join(cdir, hashlib.sha256((MODEL + mode + json.dumps(payload, sort_keys=True) + p).encode()).hexdigest() + ".json")
+    if os.path.exists(ck) and not MOCK:
         c = json.load(open(ck, encoding="utf8")); c["meta"].update(cache_hit=True, cost_this_call=0, total=spent()); return c
     if CACHE_ONLY: raise RuntimeError("cache miss in CACHE_ONLY mode (%s)" % mode)
     sysmsg, user = messages(mode, payload)
@@ -146,8 +157,8 @@ def ask(mode, payload):
         except Exception: pass
     rec["cost_this_call"] = cost; rec["total"] = spent()
     out = {"mode": mode, "payload": payload, "parsed": parsed, "raw": raw, "meta": rec}
-    if parsed is not None:
-        os.makedirs(os.path.join(ROOT, "cache"), exist_ok=True); json.dump(out, open(ck, "w", encoding="utf8"), indent=1)
+    if parsed is not None and not MOCK:
+        os.makedirs(cdir, exist_ok=True); json.dump(out, open(ck, "w", encoding="utf8"), indent=1)
     return out
 def must(mode, payload):
     d = ask(mode, payload)
@@ -160,11 +171,13 @@ def verify(cites):
     out = []
     for c in (cites or [])[:4]:
         if not isinstance(c, dict): continue
-        f, q = clip(c.get("file"), 60), clip(c.get("quote"), 200)
+        f, q = clip(c.get("file"), 120), clip(c.get("quote"), 200)
         nums = [int(n) for n in re.findall(r"\d+", str(c.get("lines")))][:2] or [0]
         lo, hi = min(nums), max(nums)
-        text = " ".join(files.get(f, [])[max(lo - 2, 0):hi + 1]).lower()  # +-1 line of slack
-        out.append({"quote": q, "source": "%s L%s" % (f, clip(c.get("lines"), 12)), "verified": bool(q) and (q.lower().strip(' ."') in text)})
+        raw = " ".join((files.get(f) or brain.doc_lines(f) or [])[max(lo - 2, 0):hi + 1]); text = raw.lower()  # +-1 line of slack
+        qq = q.lower().strip(' ."')  # a cloud model saw the redacted text, so also accept a quote that matches it
+        out.append({"quote": q, "source": "%s L%s" % (f, clip(c.get("lines"), 12)), "kind": "email" if f.startswith("email:") else "brain" if f.startswith("brain/") else "file",
+                    "verified": bool(q) and (qq in text or qq in brain.redact(raw).lower())})
     return out
 
 # ---------- the council runner: emits Roast Room's event protocol ----------
@@ -238,6 +251,7 @@ def run_council(s, prop, seats, tone, industry):
         v["scores"] = sc
         v["votes"] = {x: sum(1 for k in seats if last[k].get("vote") == x) for x in ("endorse", "amend", "dissent")} if mode == "full" else None
         v["quotes"] = verify(v.get("citations"))
+        v["suggested_actions"] = brain.suggested(v.get("suggested_actions")); brain.propose(v.pop("memory_proposals", None), s["id"])  # advisors suggest; the owner approves and runs
         v["amendments"] = [{"seat": short(k), "amendment": last[k]["amendment"], "adopted": False, "reason": "for the owner to decide"} for k in seats if mode == "full" and last[k].get("amendment")]
         for f, d in (("why", []), ("next_steps", []), ("fights", []), ("conditions", []), ("minority", {"seat": "", "quote": "", "would_have_to_be_true": ""})): v.setdefault(f, d)
         v["disclaimer"] = "Role-based AI advisors (%s), answering from SAMPLE business files. Not real people; check the numbers before you act." % config()["label"]
@@ -251,8 +265,8 @@ def run_council(s, prop, seats, tone, industry):
                "verdict": s.get("verdict_label"), "engine": s.get("engine"), "model": s.get("model"), "cost": round(s["cost"], 6), "created": s["created"], "ended": s["ended"]})
 
 def config():
-    lab = PROVIDERS[PROV]["label"] + ("" if MODEL in ("meta/muse-ember", "muse-ember-1.0") else " (%s)" % MODEL)
-    return {"model": MODEL, "base": BASE, "provider": PROV, "openrouter": OPENROUTER, "local": PROV == "local", "cache_only": CACHE_ONLY, "cap": CAP, "label": lab,
+    lab = "Mock engine (offline test)" if MOCK else PROVIDERS[PROV]["label"] + ("" if MODEL in ("meta/muse-ember", "muse-ember-1.0") else " (%s)" % MODEL)
+    return {"model": MODEL, "base": BASE, "provider": PROV, "openrouter": OPENROUTER, "local": PROV == "local", "cache_only": CACHE_ONLY, "cap": CAP, "cloud": is_cloud(), "mock": MOCK, "label": lab,
             "providers": [{"id": k, "label": v["label"], "model": v["model"], "base": v["base"]} for k, v in PROVIDERS.items()]}
 def test_provider(pid):
     if pid not in PROVIDERS: raise ValueError("unknown provider")
@@ -272,7 +286,7 @@ def clean_transcript(t):
         l = re.sub(r"^\[?\(?\d{1,2}:\d{2}(:\d{2})?([.,]\d+)?\]?\)?\s*[-:]?\s*", "", l)  # leading timestamp
         if l and (not out or out[-1] != l): out.append(l)
     return "\n".join(out)
-LOGS = os.path.join(ROOT, "logs", "council_log.jsonl")
+LOGS = os.path.join(brain.HOME, "logs", "council_log.jsonl")
 def log_event(rec):
     os.makedirs(os.path.dirname(LOGS), exist_ok=True)
     with LOCK: open(LOGS, "a", encoding="utf8").write(json.dumps(rec) + "\n")
@@ -315,14 +329,24 @@ def clean_seat(a):
              color=a.get("color") if re.fullmatch(r"#[0-9a-fA-F]{6}", str(a.get("color"))) else "#71CACD", custom=bool(a.get("custom")))
     return d
 
+LOOPBACK_ONLY = os.environ.get("HOST", "127.0.0.1") in ("127.0.0.1", "localhost", "::1")
 class H(SimpleHTTPRequestHandler):
     def log_message(self, *a): pass
     def send(self, code, body):
         b = json.dumps(body).encode(); self.send_response(code); self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(b))); self.end_headers(); self.wfile.write(b)
     def body(self): return json.loads(self.rfile.read(min(int(self.headers.get("Content-Length", 0)), 600000)) or b"{}")
+    def guard(self):  # DNS-rebinding and cross-site POST protection (skipped only when HOST is deliberately non-loopback)
+        host = (self.headers.get("Host") or "").lower()
+        if LOOPBACK_ONLY:
+            if (host.split("]")[0] + "]" if host.startswith("[") else host.rsplit(":", 1)[0]) not in ("127.0.0.1", "localhost", "[::1]"): self.send(403, {"error": "bad Host header"}); return False
+            o = self.headers.get("Origin")
+            if self.command == "POST" and o and urlparse(o).netloc.lower() != host: self.send(403, {"error": "cross-site request refused"}); return False
+        return True
     def do_GET(self):
+        if not self.guard(): return
         u = urlparse(self.path); path, qs = u.path, parse_qs(u.query)
+        if path.startswith("/api/brain/"): return self.send(*brain.handle("GET", path, qs, {}, self.headers, config()))
         if path == "/api/proof": return self.send(200, proof())
         if path == "/api/config": return self.send(200, config())
         if path == "/api/usage":
@@ -352,8 +376,10 @@ class H(SimpleHTTPRequestHandler):
                 self.wfile.flush(); time.sleep(0.3)
         except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError): pass
     def do_POST(self):
+        if not self.guard(): return
         try:
             d = self.body()
+            if self.path.startswith("/api/brain/"): return self.send(*brain.handle("POST", self.path, {}, d, self.headers, config()))
             if self.path == "/api/ask": return self.send(200, ask(d.get("mode"), d.get("payload") or {}))
             running = any(x["status"] == "running" for x in SESS.values())
             if self.path == "/api/provider":
@@ -418,6 +444,9 @@ def selftest():
     for f in glob.glob(os.path.join(ROOT, "cache", "*.json")): assert json.load(open(f, encoding="utf8"))["mode"] in SYS
     vtt = "WEBVTT\n\n1\n00:00:01.000 --> 00:00:04.000\n<v Ana>We should raise cold brew.\n\n2\n00:00:05,000 --> 00:00:07,000\nBen: Customers already complain.\n[00:12] Ana: OK, test it."
     assert clean_transcript(vtt) == "Ana: We should raise cold brew.\nBen: Customers already complain.\nAna: OK, test it.", clean_transcript(vtt)
+    import unittest  # Company Brain suite (tests/): allowlist, parsers, FTS citations, IMAP draft-only, secrets, actions, redaction, PIN
+    r = unittest.TextTestRunner(stream=sys.stdout, verbosity=0).run(unittest.defaultTestLoader.discover(os.path.join(ROOT, "tests")))
+    assert r.wasSuccessful(), "Company Brain tests failed"
     print("selftest ok")
 if __name__ == "__main__":
     if "--selftest" in sys.argv: selftest()

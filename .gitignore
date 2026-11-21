@@ -1,2 +1,10 @@
 .env
 __pycache__/
+# Company Brain: owner data stays out of git
+brain/*
+!brain/README.md
+logs/brain_audit.jsonl
+logs/mock_calls.jsonl
+data/history/*
+data/meeting_*
+tests/__pycache__/
