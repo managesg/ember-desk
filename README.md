@@ -1,73 +1,129 @@
 # Ember Council
 
-**A strategy council for local businesses, built on your own files. Learn AI by doing your real work.**
+**Your own board of advisors for a small business: ask a real question, watch them debate it, and get a clear answer based on your own files.**
 
-Ask a real decision ("Should we raise cold brew prices again?"). The Chair reads your files and proposes who should sit. Role-based AI advisors then argue it out around the table: Michelin-level chef, local marketing expert, customer psychologist, food-cost & operations manager, finance advisor, plus investor and market-need seats. Every line cites your files. You get a scored verdict with next steps, and **Learn it** turns that verdict into a short AI lesson built on your own data.
+![Ember Council demo](docs/img/demo.gif)
 
-Runs on **Muse Ember (`meta/muse-ember`) via OpenRouter**. Each advisor turn is one short, cheap call.
+▶ **Watch the 1-minute demo video:** [MP4](demo/ember_council_demo.mp4) · [WebM](demo/ember_council_demo.webm)
 
-**Demo video (1 min, 1280x720, replayed from cache at $0):** [demo/ember_council_demo.webm](demo/ember_council_demo.webm) · [mp4](demo/ember_council_demo.mp4) · raw: https://github.com/managesg/ember-desk/raw/main/demo/ember_council_demo.mp4
+---
 
-## What it does
+## What is it, in plain words?
 
-- **Roast-Room-style council table:** original 3D-cartoon role portraits in an arc. The flow runs Brief → Openings → Fault lines → Debate → Vote → Verdict.
-- **Customise your council:** pick an industry, toggle the advisors, rename them, change their focus, or add your own.
-- **Answers from your files:** price list, FAQ, reviews, sales CSV and inbox are packed with line numbers, and each claim cites `file Lx-y`.
-- **Scored verdict + Learn it:** a decision score, next steps, and a 10-minute lesson that teaches AI using this very decision.
-- **Voice:** ask by microphone, using the browser's local speech engine (works best in Chrome or Edge).
-- **History:** every council is saved to `data/history/` and replays from **Past sessions**. Every model call is logged in `proof/council_log.jsonl`.
-- **Live cost meter:** spend and call count are shown in the top bar, and **Proof** lists every generation id, its tokens and its cost.
+A café owner has a decision to make, like *"Should we raise cold brew prices again?"* Usually they guess, or ask a friend.
 
-## Any model, including local Meta models
+Ember Council gives them a table of AI advisors instead: a chef, a marketer, a customer psychologist, an operations manager and a finance advisor. Each advisor reads the business's own files (price list, sales, reviews, customer emails), says what they think, argues with the others, and votes. The owner gets:
 
-Default: OpenRouter + `meta/muse-ember`. Any OpenAI-compatible endpoint works through three env vars, so it can run fully offline on a shop PC or a small device:
+- a clear **answer** (do it / don't do it / try this instead) with a score,
+- the **reasons**, each one pointing to the exact line in their files,
+- **next steps** for today, this week and the next month,
+- a **10-minute lesson** that teaches them how to use AI for this kind of decision on their own.
 
-    # Ollama with a local Meta Llama model ($0 per call)
-    set LLM_BASE_URL=http://localhost:11434/v1
-    set LLM_MODEL=llama3.2
-    set LLM_API_KEY=ollama
+One full council costs about **one cent**. It runs on Meta's **Muse Ember** model through OpenRouter, or on a free local model on your own computer.
 
-LM Studio and llama.cpp servers work the same way.
+> The advisors are AI roles, not real people. The business in the demo (Bluebird Coffee Roasters) is made-up sample data.
 
-Or switch engines in the app: **Your council -> Engine** has *Muse Ember via OpenRouter* (default), *Muse Ember via Meta API* (`https://api.meta.ai/v1`, model `muse-ember-1.0`, key from `META_API_KEY`) and *Local Meta Llama* (Ollama on `http://localhost:11434/v1`, model `llama3.2`; first run `ollama pull llama3.2`). **Test engine** sends one short call and shows who answered. Tested tonight: OpenRouter answered in 1.8 s for $0.00016; Meta direct returned HTTP 403 because the only Meta key on this PC is a Muse Code subscription key, which Meta limits to the Muse Code client (a pay-as-you-go key is needed); the local server was running but without `llama3.2`, and the app says so instead of failing silently. Local calls show `$0 local` in the meter.
+## How it works, step by step
 
-## Import a meeting (any recorder)
+### 1. Ask your question
+Type or say your question. Pick one of the examples or write your own.
 
-**+ Import a meeting transcript** (under the question box) takes a pasted transcript or a `.txt`, `.vtt`, `.srt` or `.md` file from Zoom, Teams, Otter, Fireflies, Google Meet or Recorder. Timestamps and cue numbers are stripped, speaker names are kept, and the owner can correct the text before adding it. It is saved as `data/meeting_<date>_<title>.txt`, so advisors cite it like any other file (`meeting_2026-11-09_team.txt L3-5`). Recorders and automations (Zapier, Make) can push the same thing with `POST /api/transcript {"title": "...", "text": "..."}`. Google Drive and Meet API connectors (OAuth) are next.
+![The council table](docs/img/1-council-table.png)
 
-## History and logs
+### 2. Choose your advisors
+Pick your industry and switch advisors on or off. Rename them, change what they focus on, or add your own (an investor, a bank lender, a market analyst...).
 
-Every council is saved to `data/history/<session_id>.json`: question, industry, seated advisors, every turn with its checked citations, votes, verdict, engine and model, cost and timestamps. **Past sessions** replays them. One summary line per session, and every transcript import, goes to `logs/council_log.jsonl`.
+![Customise your council](docs/img/2-customise.png)
 
-## Run (Python stdlib only, no installs)
+### 3. Watch them debate
+Each advisor speaks in turn, quoting your files. Then they push back on each other.
 
-    set OPENROUTER_API_KEY=...        # only needed for questions that are not cached yet
-    python server.py                  # http://127.0.0.1:8000  (env HOST, PORT, BUDGET_CAP)
-    python record.py                  # replays the cache in Chrome via Playwright -> demo video
+![The debate](docs/img/3-debate.png)
 
-The key stays server-side and is never logged. A budget guard refuses calls once logged spend reaches the cap. Every response is cached in `cache/`, so the demo replays at $0.
+### 4. They vote
+Every advisor votes on the options.
 
-## Proof ($1 Challenge)
+![The vote](docs/img/4-vote.png)
+
+### 5. Get the verdict
+A clear answer, a score for each option, the reasons, the risks, and next steps. Every quote is checked against your files.
+
+![The verdict](docs/img/5-verdict.png)
+
+### 6. Learn it
+The decision turns into a short lesson, with a ready-to-copy prompt you can reuse with any AI tool. You learn AI by doing your real work.
+
+![Learn it](docs/img/6-learn-it.png)
+
+### 7. See what it cost
+The **Proof** page lists every AI call: its ID, how many words (tokens) it used, and what it cost. This whole demo cost about $0.013.
+
+![Proof](docs/img/7-proof.png)
+
+## Other things it can do
+
+- **Bring in a meeting:** paste or upload a transcript from Zoom, Teams, Google Meet, Otter or Fireflies (`.txt`, `.vtt`, `.srt`, `.md`). Fix any mistakes, and the advisors can quote it like any other file.
+- **Voice:** ask your question with the microphone (works best in Chrome or Edge).
+- **History:** every council is saved, and you can replay it from **Past sessions**.
+- **Any AI model:** Muse Ember via OpenRouter (default), Meta's own API, or a free local model (Meta Llama on Ollama) that runs on your computer with no internet.
+
+## Try it yourself
+
+You only need Python. Nothing to install.
+
+```
+git clone https://github.com/managesg/ember-desk
+cd ember-desk
+python server.py
+```
+
+Open http://127.0.0.1:8000. The demo questions are saved, so they replay **for free** without any key. To ask new questions, set your OpenRouter key first: `set OPENROUTER_API_KEY=...` (Windows) or `export OPENROUTER_API_KEY=...` (Mac/Linux).
+
+**Run it free and offline with a local model:**
+
+```
+ollama pull llama3.2
+set LLM_BASE_URL=http://localhost:11434/v1
+set LLM_MODEL=llama3.2
+set LLM_API_KEY=ollama
+python server.py
+```
+
+LM Studio and llama.cpp work the same way. You can also switch engines in the app under **Your council → Engine**.
+
+---
+
+## Technical details
+
+<details>
+<summary>How it is built</summary>
+
+- One Python file (`server.py`, standard library only) plus a static front end in `public/`. The API key stays on the server and is never logged.
+- All business files are packed into each call with line numbers, so every claim can cite `file Lx-y`. Citations are checked against the real lines.
+- Flow: the Chair proposes seats → openings → fault lines → rebuttals → draft → votes → verdict → Learn it. Each advisor turn is one short call.
+- Responses are cached in `cache/`, so saved questions replay at $0. A budget guard stops calls once logged spend reaches `BUDGET_CAP`.
+- History: `data/history/<session>.json` (question, advisors, every turn with checked citations, votes, verdict, engine, cost). One summary line per session in `logs/council_log.jsonl`.
+- Meeting import: `POST /api/transcript {"title": "...", "text": "..."}` lets recorders or automations (Zapier, Make) send transcripts. Timestamps are stripped, speaker names kept.
+- Engines: OpenRouter `meta/muse-ember` (default); Meta API `https://api.meta.ai/v1` with `muse-ember-1.0` (needs a pay-as-you-go `META_API_KEY`); any OpenAI-compatible endpoint via `LLM_BASE_URL` / `LLM_MODEL` / `LLM_API_KEY`.
+- `python server.py --selftest` runs quick checks. `python record.py` re-records the demo video from the cache with Playwright.
+</details>
+
+<details>
+<summary>Cost proof (OpenRouter × Meta "$1 Challenge")</summary>
 
 | Item | Value |
 |---|---|
 | Model | `meta/muse-ember` via OpenRouter |
 | Per-call log | `proof/council_log.jsonl`: generation id, model, provider, tokens, cost, latency |
-| Council build + test spend | $0.0131 logged over 22 live calls: 2 Chair proposals (one from v0), 5 openings, fault lines, 5 rebuttals, draft, 5 votes, verdict, Learn it, 1 engine test; ~$0.0006 per call, ~1.9-2.4k prompt tokens each |
-| One full council (live) | $0.0108 for 18 calls (openings through verdict) plus ~$0.0006 for the Chair's proposal, from `data/history/20261109-231802-1bf8.json`; Learn it adds ~$0.0008; a cached replay costs $0 |
-| Key usage over the live run | `proof/council_key_before.json` -> `council_key_after.json`: +$0.0147. The key is shared with other projects tonight, so this is an upper bound on account-wide use; the per-generation log is this app's real spend |
-| Total for this account tonight (both projects, all tests) | about $0.13 of the $1 |
-| Earlier Ember Desk log | `proof/openrouter_log.jsonl`, key snapshots `proof/key_before.json` / `key_after.json` |
+| Build + test spend | $0.0131 over 22 live calls (~$0.0006 per call) |
+| One full council | about $0.011 (18 calls) plus ~$0.0006 for the Chair; Learn it ~$0.0008; a saved replay is $0 |
+| Earlier Ember Desk version | $0.0110, `proof/openrouter_log.jsonl` |
 
-Note: Muse Ember is a reasoning model. With a small `max_tokens` the hidden reasoning used up the budget and `content` came back empty. Setting `reasoning.effort=low` with more output tokens fixed it, and that wasted spend is included above. OpenRouter's key-level usage lags behind the per-call `usage.cost`, so the per-generation log is the authoritative number.
+Muse Ember is a reasoning model: with too small a `max_tokens`, the hidden reasoning used the whole budget and the answer came back empty. Setting `reasoning.effort=low` with more output tokens fixed it, and that wasted spend is included above. OpenRouter's key-level usage lags behind per-call `usage.cost`, so the per-call log is the authoritative number.
+</details>
 
-## Data and credits
+## Credits
 
-- All business data is **SAMPLE DATA** (fictional Bluebird Coffee Roasters, `data/`, generated by `gen_data.py`).
-- The advisors are role-based AI personas, **not real people**. The portraits are original.
 - Table layout adapted from [Roast Room](https://github.com/nateherkai/roast-room) (MIT, © 2026 AI Automation Society). See `LICENSE` and `NOTICE`.
-
-## Feedback
-
-**Muse Ember:** strong at reading a whole small business in one cheap call and keeping citations grounded. Budget `max_tokens` for the hidden reasoning.
-**OpenRouter:** `usage.include` made the live cost meter trivial. Key-level usage lags behind per-call cost.
+- Advisor portraits are original and show no real people. All business data is sample data (`gen_data.py`).
+- Built by [SeaBridgeAI](https://www.seabridge.ai/) for the OpenRouter × Meta Build Day, November 2026.
